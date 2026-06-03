@@ -1,0 +1,21 @@
+{
+  "name": "open-sales-assistant",
+  "version": "0.1.0",
+  "description": "Self-hosted AI sales assistant starter kit for teams and individual sales workflows.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "NODE_ENV=production node server/index.js",
+    "check": "node --check server/index.js && node --check public/admin.js && node --check public/chat.js && node --check public/login.js",
+    "test": "npm run check"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "mammoth": "^1.8.0",
+    "multer": "^2.0.0",
+    "pdf-parse": "^1.1.1"
+  }
+}

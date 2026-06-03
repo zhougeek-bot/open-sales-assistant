@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>后台登录</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <div class="brand login-brand">
+      <span class="brand-mark">智</span>
+      <div>
+        <p>开源团队销售助手</p>
+        <h1>知识库后台登录</h1>
+      </div>
+    </div>
+    <form id="loginForm" class="login-form">
+      <label>管理员账号<input name="username" autocomplete="username" placeholder="请输入账号"></label>
+      <label>登录密码<input name="password" type="password" autocomplete="current-password" placeholder="请输入密码"></label>
+      <button class="primary-btn" type="submit">登录后台</button>
+    </form>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="/login.js"></script>
+</body>
+</html>

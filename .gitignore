@@ -1,0 +1,10 @@
+node_modules/
+.env
+.DS_Store
+npm-debug.log*
+uploads/
+data/backups/
+*.zip
+*.tar
+*.tar.gz
+*.log

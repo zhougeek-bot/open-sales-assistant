@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>咨询助手</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="chat-page">
+  <main class="chat-app">
+    <header class="chat-header">
+      <div class="advisor-avatar">智</div>
+      <div>
+        <h1 id="chatTitle">咨询顾问</h1>
+        <p>在线咨询 · 知识库智能答复</p>
+      </div>
+      <span>在线</span>
+    </header>
+
+    <nav class="student-tools">
+      <button type="button" data-tool="certificates">证书查询</button>
+      <button type="button" data-tool="profile">个人中心</button>
+    </nav>
+
+    <section class="chat-messages" id="messages"></section>
+
+    <section class="quick-bar" id="quickQuestions"></section>
+
+    <form class="chat-compose" id="chatForm">
+      <input name="question" autocomplete="off" placeholder="请输入你想咨询的问题">
+      <button type="submit">发送</button>
+    </form>
+  </main>
+
+  <section class="entry-mask" id="entryMask">
+    <div class="entry-card">
+      <h2>进入咨询助手</h2>
+      <p>请输入昵称，系统会为你生成随机密码。昵称就是后续登录名，密码可以在个人中心修改。</p>
+      <form id="entryForm">
+        <label>昵称<input name="nickname" autocomplete="nickname" placeholder="例如：小李同学"></label>
+        <button class="primary-btn" type="submit">进入咨询</button>
+      </form>
+      <form id="loginStudentForm" class="mini-login">
+        <label>已有账号登录<input name="nickname" placeholder="昵称"></label>
+        <label><input name="password" type="password" placeholder="密码"></label>
+        <button type="submit">登录</button>
+        <button class="text-btn" id="forgotPasswordBtn" type="button">忘记密码？</button>
+      </form>
+    </div>
+  </section>
+
+  <dialog class="student-dialog" id="infoDialog">
+    <div class="dialog-head">
+      <h2 id="dialogTitle">详情</h2>
+      <button type="button" id="closeDialog">关闭</button>
+    </div>
+    <div id="dialogBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+  <script src="/chat.js"></script>
+</body>
+</html>
