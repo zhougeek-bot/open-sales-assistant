@@ -37,6 +37,13 @@ cp .env.example .env
 npm run dev
 ```
 
+Docker 快速启动：
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+```
+
 打开：
 
 - 客户入口：http://localhost:3100/
@@ -116,6 +123,7 @@ AI_VISION_MODEL=qwen-vl-plus
 | 开发计划 | [开发计划.md](docs/开发计划.md) | [development-plan.md](docs/en/development-plan.md) |
 | 数据迁移与备份 | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) |
 | 存储策略 | [存储策略.md](docs/存储策略.md) | [storage-strategy.md](docs/en/storage-strategy.md) |
+| Docker 部署 | [Docker部署说明.md](docs/Docker部署说明.md) | [docker-deployment.md](docs/en/docker-deployment.md) |
 | 服务器部署 | [服务器部署说明.md](docs/服务器部署说明.md) | [server-deployment.md](docs/en/server-deployment.md) |
 | 宝塔面板部署 | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) |
 
@@ -162,6 +170,7 @@ JSON 文件存储会继续作为默认轻量模式保留。后续 PostgreSQL/MyS
 - 增加操作日志和更安全的数据备份/恢复流程。
 - 增加可编辑 AI 建议和知识版本历史。
 - 增加可选 PostgreSQL/MySQL 存储适配，同时保留 JSON 存储。
+- 改进 Docker 部署和生产自部署示例。
 - 增加客户分层和销售漏斗看板。
 - 增加 CRM、表单、聊天工具、表格等连接器示例。
 - 增加测试和 prompt evaluation 用例，方便社区稳定贡献。

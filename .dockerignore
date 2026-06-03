@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log*
+.env
+.DS_Store
+.git
+.github
+uploads
+data/backups
+*.zip
+*.tar
+*.tar.gz
+*.log

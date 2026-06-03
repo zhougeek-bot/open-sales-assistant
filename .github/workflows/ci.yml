@@ -26,3 +26,15 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Validate Docker Compose config
+        run: docker compose config
+
+      - name: Build Docker image
+        run: docker build -t open-sales-assistant:test .
+
+      - name: Run Docker smoke test
+        run: |
+          trap 'docker compose down' EXIT
+          docker compose up -d --build
+          curl --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:3100/api/health

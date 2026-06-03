@@ -10,6 +10,7 @@ This project follows a lightweight release log while the project is still in ear
 - Added English documentation under `docs/en/`.
 - Documented user-managed OpenAI-compatible AI API configuration.
 - Added storage strategy documentation that keeps JSON file storage as the default lightweight option while planning optional database adapters.
+- Added Dockerfile, Docker Compose configuration, and bilingual Docker deployment docs.
 
 ## v0.1.0 - 2026-06-03
 

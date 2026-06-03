@@ -68,7 +68,7 @@ Goal: make self-hosting safer and easier.
 - Add restore tooling.
 - Add operation logs.
 - Add optional PostgreSQL or MySQL support without removing JSON storage.
-- Add Docker deployment.
+- Improve Docker deployment and containerized self-hosting examples.
 - Add a production deployment checklist.
 
 ### P4: Ecosystem Connectors

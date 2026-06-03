@@ -86,6 +86,8 @@ data/backups/
 
 JSON storage remains the default lightweight mode for local demos and small self-hosted trials. Future PostgreSQL/MySQL support should be added through optional storage adapters instead of replacing JSON storage.
 
+Dockerfile and Docker Compose deployment are available for containerized self-hosting.
+
 ## 6. Current Limitations
 
 - No sales member roles or permissions.
@@ -103,7 +105,7 @@ Priority areas:
 2. Operation logs.
 3. Knowledge versioning and editable AI suggestions.
 4. Basic tests and prompt evaluation.
-5. Docker and optional database adapters that preserve JSON mode.
+5. Optional database adapters that preserve JSON mode.
 
 See:
 

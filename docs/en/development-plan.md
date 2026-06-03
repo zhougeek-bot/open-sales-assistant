@@ -77,7 +77,7 @@ open-sales-assistant/
 
 ### P3: Self-Hosting Improvements
 
-- Add Docker deployment.
+- Improve Docker deployment.
 - Add optional PostgreSQL or MySQL support while preserving JSON file storage.
 - Add restore tooling.
 - Add production deployment checklist.

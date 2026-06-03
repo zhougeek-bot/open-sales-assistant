@@ -28,6 +28,13 @@ cp .env.example .env
 npm run dev
 ```
 
+Docker quick start:
+
+```bash
+cp .env.example .env
+docker compose up -d --build
+```
+
 Open:
 
 - Customer entry: http://localhost:3100/
@@ -112,6 +119,7 @@ Start here:
 | Development plan | [development-plan.md](docs/en/development-plan.md) | [开发计划.md](docs/开发计划.md) |
 | Data migration and backup | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) |
 | Storage strategy | [storage-strategy.md](docs/en/storage-strategy.md) | [存储策略.md](docs/存储策略.md) |
+| Docker deployment | [docker-deployment.md](docs/en/docker-deployment.md) | [Docker部署说明.md](docs/Docker部署说明.md) |
 | Server deployment | [server-deployment.md](docs/en/server-deployment.md) | [服务器部署说明.md](docs/服务器部署说明.md) |
 | BT Panel deployment | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) |
 
@@ -153,6 +161,7 @@ JSON file storage will remain supported as the default lightweight mode. Future 
 - Add operation logs and safer data backup/restore workflows.
 - Add editable AI suggestions and knowledge version history.
 - Add optional PostgreSQL/MySQL storage adapters while preserving JSON storage.
+- Improve Docker deployment and production self-hosting examples.
 - Add customer segmentation and sales funnel dashboards.
 - Add connector examples for CRM, forms, chat tools, and spreadsheets.
 - Add tests and prompt evaluation cases for stable community contributions.
