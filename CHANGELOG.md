@@ -12,6 +12,7 @@ This project follows a lightweight release log while the project is still in ear
 - Added storage strategy documentation that keeps JSON file storage as the default lightweight option while planning optional database adapters.
 - Added Dockerfile, Docker Compose configuration, and bilingual Docker deployment docs.
 - Added an English/Chinese UI switch for customer chat, admin login, and admin console pages.
+- Replaced the default demo dataset with a cleaner English training-course sales scenario.
 
 ## v0.1.0 - 2026-06-03
 

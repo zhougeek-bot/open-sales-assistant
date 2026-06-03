@@ -4,7 +4,7 @@
 
 Open Sales Assistant is a self-hosted AI sales assistant starter kit for small teams and individual sales workflows. It helps a team turn sales materials into a searchable knowledge base, answer customer questions, review AI-generated sales suggestions, and keep basic customer follow-up records.
 
-The included dataset is demo data for a training course sales scenario. It is kept as an initial example so new users can run the project immediately and understand the workflow.
+The included dataset is an English demo for a training course sales scenario. It is kept as an initial example so new users can run the project immediately and understand the workflow.
 
 For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese project overview, quick start, AI API configuration, and roadmap.
 
@@ -134,7 +134,7 @@ The test command runs JavaScript syntax checks and a local smoke test for the he
 
 ## Demo Data
 
-`data/db.json` contains sample training-institution sales data. Treat it as demo content only:
+`data/db.json` contains sample English training-course sales data. Treat it as demo content only:
 
 - It demonstrates how sales materials become a knowledge base.
 - It is not a production dataset.

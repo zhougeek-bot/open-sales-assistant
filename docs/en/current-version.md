@@ -54,7 +54,7 @@ Provider examples:
 
 ## 4. Demo Data
 
-`data/db.json` contains training-course sales demo data.
+`data/db.json` contains English training-course sales demo data.
 
 Notes:
 
