@@ -35,6 +35,7 @@ jobs:
 
       - name: Run Docker smoke test
         run: |
-          trap 'docker compose down' EXIT
+          trap 'docker compose logs || true; docker compose down' EXIT
           docker compose up -d --build
-          curl --retry 20 --retry-delay 2 --retry-connrefused http://127.0.0.1:3100/api/health
+          sleep 3
+          curl --fail --retry 20 --retry-delay 2 --retry-all-errors http://127.0.0.1:3100/api/health
