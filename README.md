@@ -39,6 +39,60 @@ ADMIN_PASSWORD=请设置一个强密码
 
 Set `AI_API_KEY` before using AI analysis or chat generation.
 
+## Configure Your Own AI API
+
+Open Sales Assistant uses environment variables for AI settings. It does not store API keys in the admin UI or in `data/db.json`.
+
+Create your local `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set your own OpenAI-compatible API key:
+
+```env
+AI_PROVIDER=kimi
+AI_BASE_URL=https://api.moonshot.cn/v1
+AI_API_KEY=your_api_key_here
+AI_TEXT_MODEL=kimi-k2.6
+AI_VISION_MODEL=kimi-k2.6
+```
+
+Do not commit `.env` to GitHub. The repository `.gitignore` already excludes it.
+
+If `AI_API_KEY` is empty or still contains the placeholder text, the app uses local fallback responses. This is enough to test pages and data flow, but AI analysis and AI chat generation will not call a real model.
+
+Provider examples:
+
+```env
+# Kimi / Moonshot
+AI_PROVIDER=kimi
+AI_BASE_URL=https://api.moonshot.cn/v1
+AI_TEXT_MODEL=kimi-k2.6
+AI_VISION_MODEL=kimi-k2.6
+
+# OpenAI
+AI_PROVIDER=openai
+AI_BASE_URL=https://api.openai.com/v1
+AI_TEXT_MODEL=gpt-4o-mini
+AI_VISION_MODEL=gpt-4o-mini
+
+# DeepSeek
+AI_PROVIDER=deepseek
+AI_BASE_URL=https://api.deepseek.com
+AI_TEXT_MODEL=deepseek-chat
+AI_VISION_MODEL=deepseek-chat
+
+# DashScope / Tongyi Qianwen
+AI_PROVIDER=dashscope
+AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+AI_TEXT_MODEL=qwen-plus
+AI_VISION_MODEL=qwen-vl-plus
+```
+
+The `/api/health` endpoint only reports whether AI is configured and which model names are active. It never returns the API key.
+
 ## Development Checks
 
 ```bash

@@ -478,7 +478,7 @@ async function callAi(messages, { model, temperature = 0.4 } = {}) {
     return null;
   }
 
-  const baseUrl = process.env.AI_BASE_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1';
+  const baseUrl = process.env.AI_BASE_URL || 'https://api.moonshot.cn/v1';
   const provider = process.env.AI_PROVIDER || '';
   const effectiveTemperature = provider === 'kimi' ? 0.6 : temperature;
   const response = await fetch(`${baseUrl.replace(/\/$/, '')}/chat/completions`, {
