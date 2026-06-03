@@ -75,6 +75,12 @@ async function main() {
       throw new Error('Smoke test expects AI to be unconfigured.');
     }
 
+    const demoLanguageResponse = await fetch(`${baseUrl}/api/demo-language`);
+    const demoLanguage = await demoLanguageResponse.json();
+    if (!['en', 'zh-CN'].includes(demoLanguage.language)) {
+      throw new Error(`Unexpected demo language: ${demoLanguage.language}`);
+    }
+
     for (const [route, expectedTitle] of requiredPages) {
       const html = await fetchText(`${baseUrl}${route}`);
       if (!html.includes(`<title>${expectedTitle}</title>`)) {

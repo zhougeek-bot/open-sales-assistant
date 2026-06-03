@@ -38,6 +38,7 @@ Example:
 PORT=3100
 PUBLIC_BASE_URL=https://your-domain
 DATA_BACKUP_DIR=/opt/open-sales-assistant-backups
+DEMO_LANGUAGE_SWITCH=false
 
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=set_a_strong_password
@@ -50,6 +51,8 @@ AI_VISION_MODEL=kimi-k2.6
 ```
 
 Production deployments must use a server-side `.env`. Do not upload `.env` to GitHub and do not store API keys in `data/db.json`.
+
+The default UI and demo dataset are English. Keep `DEMO_LANGUAGE_SWITCH=false` for production unless this deployment is intentionally used as a public demo that can reset its demo dataset.
 
 This project calls OpenAI-compatible `/chat/completions` APIs. Other compatible providers can be used:
 

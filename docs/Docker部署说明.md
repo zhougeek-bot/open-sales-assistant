@@ -32,6 +32,7 @@ cp .env.example .env
 PORT=3100
 PUBLIC_BASE_URL=http://localhost:3100
 STORAGE_DRIVER=json
+DEMO_LANGUAGE_SWITCH=false
 
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=请设置一个强密码
@@ -46,6 +47,8 @@ AI_VISION_MODEL=kimi-k2.6
 不要把 `.env` 提交到 GitHub。
 
 如果 `AI_API_KEY` 为空，应用仍然可以启动，并在依赖 AI 的流程中使用本地 fallback 回复。
+
+默认界面和 demo 数据都是英文。只有当你明确希望公开语言切换同时替换该部署中的 demo 数据时，才设置 `DEMO_LANGUAGE_SWITCH=true`。
 
 ## 3. 启动
 

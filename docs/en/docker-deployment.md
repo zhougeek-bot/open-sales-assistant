@@ -32,6 +32,7 @@ Edit `.env`:
 PORT=3100
 PUBLIC_BASE_URL=http://localhost:3100
 STORAGE_DRIVER=json
+DEMO_LANGUAGE_SWITCH=false
 
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=set_a_strong_password
@@ -46,6 +47,8 @@ AI_VISION_MODEL=kimi-k2.6
 Do not commit `.env` to GitHub.
 
 If `AI_API_KEY` is empty, the app still starts and uses local fallback responses for AI-dependent flows.
+
+The default UI and demo dataset are English. Set `DEMO_LANGUAGE_SWITCH=true` only when you intentionally want public UI language switching to also replace the demo dataset on that deployment.
 
 ## 3. Start
 

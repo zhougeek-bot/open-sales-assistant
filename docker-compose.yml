@@ -12,6 +12,7 @@ services:
       PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:3100}
       DATA_BACKUP_DIR: /app/data/backups
       STORAGE_DRIVER: ${STORAGE_DRIVER:-json}
+      DEMO_LANGUAGE_SWITCH: ${DEMO_LANGUAGE_SWITCH:-false}
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change_this_password}
       AI_PROVIDER: ${AI_PROVIDER:-kimi}

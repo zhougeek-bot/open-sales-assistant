@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 2,
+  "settings": {
+    "demoLanguage": "zh-CN",
+    "siteName": "跃动康复课程顾问",
+    "welcomeText": "你好，我是课程顾问 Alex。你可以直接问适合人群、学习安排、证书流程、费用和报名步骤。",
+    "serviceName": "Alex",
+    "servicePhone": "+86 138 0000 2333",
+    "salesPersona": "友好、专业、具体、不过度承诺，像有经验的团队销售顾问一样回答。",
+    "contactHint": "如果你愿意，我可以继续帮你对比适合的课程路径、近期班期和报名步骤。",
+    "safetyRules": "不能承诺包过、保拿证、就业、收入或治疗效果；价格、证书政策和班期以团队最新确认信息为准。"
+  },
+  "materials": [
+    {
+      "id": "mat_demo_recovery_course_zh",
+      "type": "text",
+      "title": "跃动康复 AOPT 运动康复课程",
+      "category": "课程介绍",
+      "description": "中文课程销售场景 demo 素材。",
+      "content": "跃动康复 AOPT 运动康复课程\n\n核心亮点：AOPT 对齐认证路径、循证康复框架、实操训练和线上线下结合学习。\n\n课程内容：覆盖腰椎骨盆、下肢、上肢、颈肩四大模块，学习评估、临床推理、运动处方、生物力学、筋膜释放思路和神经活动度技术。\n\n学习方式：线上自主预习 + 线下 12 天实操，分 4 个阶段完成。小班最多 40 人，适合在职学习。\n\n适合人群：康复从业者、健身教练、普拉提老师、运动科学学生，以及希望系统进入运动康复咨询方向的零基础学习者。\n\n重要边界：课程可以提升知识和实操信心，但不承诺临床效果、证书结果、就业或收入。",
+      "createdAt": "2026-05-11T19:59:29.357Z",
+      "analysis": {
+        "summary": "跃动康复提供 AOPT 对齐的运动康复课程，采用线上预习和 12 天线下实操结合的方式，重点训练评估、方案设计和实操带教。",
+        "sellingPoints": [
+          "结构清晰：四大身体模块覆盖腰椎骨盆、下肢、上肢、颈肩。",
+          "实操导向：线上预习 + 线下带教 + 案例练习。",
+          "适合多类人群：康复师、健身教练、普拉提老师、运动科学学生和零基础学习者。",
+          "对新手友好：有预习路径和线下纠正，但仍需要持续练习。",
+          "销售边界清楚：不承诺包过、就业、收入或治疗结果。"
+        ],
+        "faq": [
+          {
+            "question": "课程会颁发什么证书？",
+            "answer": "完成课程和考核后，可能获得课程方说明的证书。具体证书名称、政策和获得条件需要以最新官方课程信息为准。"
+          },
+          {
+            "question": "线下课怎么安排？",
+            "answer": "demo 课程设计为 12 天线下实操，分 4 个阶段完成，并配合线上预习。具体班期需要报名前再次确认。"
+          },
+          {
+            "question": "零基础可以学吗？",
+            "answer": "可以，课程对零基础友好，但建议按要求完成线上预习，并在线下课中认真练习。"
+          }
+        ],
+        "concerns": [
+          {
+            "concern": "工作忙，担心没有时间。",
+            "response": "课程采用线上预习和分阶段线下课，比较适合在职学习。但报名前仍建议先评估未来 2-3 个月的时间安排。"
+          },
+          {
+            "concern": "担心学完不会用。",
+            "response": "课程包含实操带教和案例训练，但真正落地还取决于课后练习、反馈和实际案例积累。"
+          },
+          {
+            "concern": "不确定证书有没有用。",
+            "response": "证书可以作为学习证明，但价值取决于你的职业目标、所在市场和用人方要求，建议同时关注课程实操内容和证书政策。"
+          }
+        ],
+        "tags": [
+          "运动康复",
+          "AOPT",
+          "课程销售",
+          "健身教练进修",
+          "康复教育",
+          "实操工作坊"
+        ]
+      }
+    },
+    {
+      "id": "mat_demo_schedule_zh",
+      "type": "text",
+      "title": "Demo 班期安排",
+      "category": "销售备注",
+      "description": "用于回答班期相关问题的中文 demo 备注。",
+      "content": "Demo 班期安排：每周三开放新的咨询和排期沟通。实际报名截止时间、线下课日期和剩余名额，需要在付款前由课程团队确认。",
+      "createdAt": "2026-05-11T14:30:20.061Z",
+      "analysis": {
+        "summary": "Demo 场景中每周三开放咨询和排期沟通，最终班期与名额需要团队确认。",
+        "sellingPoints": [
+          "每周固定咨询节奏，方便潜在客户规划下一步。",
+          "边界清楚：实际日期和名额需要最新确认。"
+        ],
+        "faq": [],
+        "concerns": [],
+        "imageUsage": ""
+      }
+    }
+  ],
+  "knowledge": {
+    "generatedAt": "2026-05-12T06:35:13.521Z",
+    "provider": "demo",
+    "siteName": "跃动康复课程顾问",
+    "overview": "跃动康复课程顾问是一个运动康复培训项目的 demo 销售助手。Demo 课程采用线上预习 + 线下 12 天实操的方式，覆盖腰椎骨盆、下肢、上肢、颈肩四大模块。适合康复从业者、健身教练、普拉提老师、运动科学学生和有动力的零基础学习者。助手需要帮助客户了解适配度、学习安排、证书流程、学习预期和下一步，同时避免承诺包过、就业、收入或治疗效果。",
+    "salesPlaybook": [
+      {
+        "id": "pb_demo_zh_1",
+        "title": "开场需求了解",
+        "scenario": "首次咨询",
+        "content": "先询问客户背景：康复师、健身教练、普拉提老师、学生还是转行人群。再追问希望解决什么客户案例或提升哪类技能。",
+        "enabled": true,
+        "sourceMaterialId": "mat_demo_recovery_course_zh",
+        "sourceMaterialTitle": "跃动康复 AOPT 运动康复课程",
+        "conflicts": []
+      },
+      {
+        "id": "pb_demo_zh_2",
+        "title": "零基础顾虑安抚",
+        "scenario": "零基础咨询",
+        "content": "说明零基础可以学习，但需要完成线上预习，并且线下课会有大量实操练习。避免说每个人都能马上掌握。",
+        "enabled": true,
+        "sourceMaterialId": "mat_demo_recovery_course_zh",
+        "sourceMaterialTitle": "跃动康复 AOPT 运动康复课程",
+        "conflicts": []
+      },
+      {
+        "id": "pb_demo_zh_3",
+        "title": "时间安排匹配",
+        "scenario": "在职学习者",
+        "content": "强调线上预习 + 线下 12 天分 4 阶段的混合模式。推荐班期前先询问客户未来 2-3 个月的可用时间。",
+        "enabled": true,
+        "sourceMaterialId": "mat_demo_schedule_zh",
+        "sourceMaterialTitle": "Demo 班期安排",
+        "conflicts": []
+      },
+      {
+        "id": "pb_demo_zh_4",
+        "title": "负责任收尾",
+        "scenario": "报名下一步",
+        "content": "主动提出帮客户确认最新班期、名额、证书政策和费用，并明确最终信息以团队最新确认内容为准。",
+        "enabled": true,
+        "sourceMaterialId": "mat_demo_recovery_course_zh",
+        "sourceMaterialTitle": "跃动康复 AOPT 运动康复课程",
+        "conflicts": []
+      }
+    ],
+    "faq": [
+      {
+        "question": "零基础适合学吗？",
+        "answer": "适合有动力的零基础学习者。课程包含线上预习和线下实操带教，但需要愿意学习基础解剖和持续练习。",
+        "conflicts": []
+      },
+      {
+        "question": "课程多久能学完？",
+        "answer": "Demo 课程包含线上预习和 12 天线下实操，分 4 个阶段完成。实际班期需要以课程团队确认的信息为准。",
+        "conflicts": []
+      },
+      {
+        "question": "能学到什么？",
+        "answer": "主要学习评估、动作分析、康复方案设计、运动处方和四大身体模块的实操带教。",
+        "conflicts": []
+      },
+      {
+        "question": "证书一定能拿到吗？",
+        "answer": "不能保证。证书获得取决于课程方最新政策、出勤和考核要求，销售助手不能承诺保拿证。",
+        "conflicts": []
+      },
+      {
+        "question": "费用是多少？",
+        "answer": "Demo 中不固定价格。销售顾问应先确认客户适合的班期，再由团队提供最新价格和支付方案。",
+        "conflicts": []
+      }
+    ],
+    "concerns": [
+      {
+        "concern": "工作忙，怕没时间。",
+        "response": "这个顾虑很常见。混合学习模式会更灵活，线上可以自主预习，线下实操分阶段进行。建议先核对你未来 2-3 个月的工作安排，再选择班期。",
+        "conflicts": []
+      },
+      {
+        "concern": "零基础怕学不会。",
+        "response": "课程对新手友好，但仍需要预习和练习。比较稳妥的下一步是先看入门模块或预约一次学习规划，判断节奏是否适合你。",
+        "conflicts": []
+      },
+      {
+        "concern": "不确定证书对职业有没有帮助。",
+        "response": "证书可以作为学习证明，但价值取决于你的职业路径、所在市场和用人方要求。报名前建议同时评估课程实操内容和证书政策。",
+        "conflicts": []
+      }
+    ],
+    "tags": [
+      "demo 数据",
+      "运动康复",
+      "课程销售",
+      "AI 销售助手",
+      "自部署 CRM",
+      "知识库"
+    ],
+    "imageCards": [],
+    "sourceMaterialIds": [
+      "mat_demo_recovery_course_zh",
+      "mat_demo_schedule_zh"
+    ],
+    "updatedAt": "2026-05-12T06:35:13.521Z"
+  },
+  "students": [
+    {
+      "id": "stu_demo_maya_zh",
+      "nickname": "小林",
+      "passwordHash": "64bb9a4725f56682012c43742a687efd:b4774da8b083cd4078f87fa69b1a7645731cda485fff278f2823bc7b5fdbad7680100d14259ed6619fde637973b2ae55494eb5bc742083e14797402b1d4ec6ab",
+      "phone": "+86 138 0000 1101",
+      "avatar": "",
+      "userCode": "DEMO2001",
+      "salesId": "",
+      "referrerCode": "",
+      "intentLevel": "medium",
+      "createdAt": "2026-05-12T05:42:05.904Z",
+      "lastLoginAt": "2026-05-12T05:42:05.904Z",
+      "name": "林晓",
+      "age": "28",
+      "gender": "女",
+      "idCard": "",
+      "currentStatus": "零基础咨询，关注学习难度和时间安排。",
+      "profileSummary": "小林是零基础潜在客户，对运动康复课程感兴趣，主要关心自己能不能跟上，以及课程是否适合在职学习。",
+      "nextAction": "预约一次简短学习规划，确认她当前职业、每周学习时间和意向班期，再提供入门模块和班期建议。"
+    },
+    {
+      "id": "stu_demo_liam_zh",
+      "nickname": "李明",
+      "passwordHash": "c2c972754febae2f3b4a973e965911c7:47a596a8bf3e482a7342f8b02ed87a18712cb08788056f2f6944d412b00e0d3b3f4e9090017459de6fa97c06297fe788329ecd577cddba4772c68d8b5e24b3bb",
+      "phone": "+86 138 0000 4435",
+      "avatar": "",
+      "userCode": "DEMO2002",
+      "salesId": "",
+      "referrerCode": "",
+      "intentLevel": "high",
+      "createdAt": "2026-05-11T20:42:07.675Z",
+      "lastLoginAt": "2026-05-11T20:42:07.675Z",
+      "name": "李明",
+      "age": "",
+      "gender": "",
+      "idCard": "",
+      "currentStatus": "健身教练，高意向，已询问报名信息。",
+      "profileSummary": "李明是高意向客户，已索要课程介绍并留下手机号，需要进一步确认职业背景、学习目标、预算和可用时间。",
+      "nextAction": "电话跟进，确认健身教练背景、目标技能、意向班期和预算，再同步最新费用、证书政策和报名清单。"
+    }
+  ],
+  "chats": [
+    {
+      "id": "chat_demo_maya_zh_1",
+      "studentId": "stu_demo_maya_zh",
+      "studentNickname": "小林",
+      "question": "你好，我是零基础，这个课程适合我吗？",
+      "answer": "小林你好，适合有动力的零基础学习者。课程会从线上预习开始，再到线下实操中学习评估和运动方案设计。\n\n不过我也会如实说明，能不能掌握取决于预习、上课练习和课后复盘，不会承诺每个人马上都能学会。如果你愿意，我可以帮你先看一下零基础学习路径和近期班期。",
+      "images": [],
+      "mode": "ai",
+      "createdAt": "2026-05-12T05:42:47.541Z"
+    },
+    {
+      "id": "chat_demo_maya_zh_2",
+      "studentId": "stu_demo_maya_zh",
+      "studentNickname": "小林",
+      "question": "我平时上班，多久能学完？",
+      "answer": "这个 demo 课程是线上预习 + 线下 12 天实操，线下分 4 个阶段完成，比一次性集中上课更适合在职学习。\n\n推荐先看你未来 2-3 个月的工作安排，再匹配合适班期，这样更稳。",
+      "images": [],
+      "mode": "ai",
+      "createdAt": "2026-05-12T05:48:12.000Z"
+    },
+    {
+      "id": "chat_demo_liam_zh_1",
+      "studentId": "stu_demo_liam_zh",
+      "studentNickname": "李明",
+      "question": "能给我介绍一下现在的课程吗？",
+      "answer": "可以。跃动康复课程是一个运动康复培训项目，采用线上预习 + 线下 12 天实操的方式，覆盖腰椎骨盆、下肢、上肢、颈肩四大模块。\n\n它比较适合健身教练、康复从业者、普拉提老师、运动科学学生和有动力的零基础学习者，重点是评估、动作分析、康复方案设计和实操带教。\n\n证书政策、价格和班期需要以团队最新确认信息为准。",
+      "images": [],
+      "mode": "ai",
+      "createdAt": "2026-05-11T20:43:26.335Z"
+    },
+    {
+      "id": "chat_demo_liam_zh_2",
+      "studentId": "stu_demo_liam_zh",
+      "studentNickname": "李明",
+      "question": "我很感兴趣，可以先登记我的手机号吗？+86 138 0000 4435",
+      "answer": "收到李明，我先在 demo 跟进流程里记录你的手机号。正式进入报名前，我建议再确认一下你的教练背景、目标技能、适合班期和证书预期。\n\n确认后，团队可以继续同步最新价格、班期、剩余名额和报名清单。",
+      "images": [],
+      "mode": "ai",
+      "createdAt": "2026-05-11T20:45:58.380Z"
+    }
+  ],
+  "followUps": [
+    {
+      "id": "fu_demo_liam_zh_1",
+      "studentId": "stu_demo_liam_zh",
+      "adminId": "adm_1778530824793_8wckcz",
+      "adminName": "System Administrator",
+      "content": "高意向客户。需要跟进最新费用、证书政策和近期班期。",
+      "createdAt": "2026-05-12T07:10:00.000Z"
+    }
+  ],
+  "aiAnalysis": [
+    {
+      "id": "analysis_demo_maya_zh",
+      "studentId": "stu_demo_maya_zh",
+      "intentLevel": "medium",
+      "nickname": "小林",
+      "name": "林晓",
+      "phone": "+86 138 0000 1101",
+      "age": "28",
+      "gender": "女",
+      "idCard": "",
+      "currentStatus": "零基础咨询，关注学习难度和时间安排。",
+      "summary": "小林对课程感兴趣，但存在零基础焦虑和时间安排顾虑。她需要先理解学习路径和时间投入，再决定是否报名。",
+      "concerns": [
+        "零基础学习难度",
+        "在职时间安排",
+        "学习周期"
+      ],
+      "interestedProjects": [
+        "跃动康复 AOPT 运动康复课程"
+      ],
+      "nextAction": "说明零基础学习路径，询问每周可学习时间。确认时间后再推荐合适班期。",
+      "createdAt": "2026-05-12T06:08:42.083Z"
+    },
+    {
+      "id": "analysis_demo_liam_zh",
+      "studentId": "stu_demo_liam_zh",
+      "intentLevel": "high",
+      "nickname": "李明",
+      "name": "李明",
+      "phone": "+86 138 0000 4435",
+      "age": "",
+      "gender": "",
+      "idCard": "",
+      "currentStatus": "健身教练，高意向，已询问报名信息。",
+      "summary": "李明主动询问课程并留下手机号，意向较高。仍需确认背景、班期、预算和证书预期。",
+      "concerns": [
+        "需要确认最新价格",
+        "需要确认证书政策",
+        "需要确认班期和名额"
+      ],
+      "interestedProjects": [
+        "跃动康复 AOPT 运动康复课程"
+      ],
+      "nextAction": "电话跟进并确认适配度，如果匹配则推进报名清单。",
+      "createdAt": "2026-05-12T06:59:20.920Z"
+    }
+  ],
+  "knowledgeSuggestions": [],
+  "courses": [],
+  "courseSchedules": [],
+  "certificates": [],
+  "studentSessions": [],
+  "adminSessions": [],
+  "adminUsers": [
+    {
+      "id": "adm_1778530824793_8wckcz",
+      "username": "admin",
+      "passwordHash": "62ee90411f1c22d719732b9cd4e986ea:5227b963542847969513f6efe47315d9aa73d32386f91aa2ccd306871bfbd282dc9228088cfe1fdd948ef38ebcb6035a7958811431cc1dfaf0f3c5c4e5703b5e",
+      "realName": "System Administrator",
+      "role": "super_admin",
+      "status": "active",
+      "createdAt": "2026-05-11T20:20:24.827Z"
+    }
+  ]
+}

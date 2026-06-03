@@ -224,7 +224,7 @@ function getInitialLang() {
     return queryLang;
   }
   const saved = localStorage.getItem(I18N_STORAGE_KEY);
-  return supportedLangs.has(saved) ? saved : 'zh-CN';
+  return supportedLangs.has(saved) ? saved : 'en';
 }
 
 let currentLang = getInitialLang();
@@ -280,14 +280,27 @@ function addLanguageToggle() {
   toggle.dataset.i18nIgnore = 'true';
   toggle.textContent = currentLang === 'en' ? '中文' : 'EN';
   toggle.setAttribute('aria-label', 'Switch language');
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', async () => {
     const nextLang = currentLang === 'en' ? 'zh-CN' : 'en';
     localStorage.setItem(I18N_STORAGE_KEY, nextLang);
+    await switchDemoLanguage(nextLang);
     const url = new URL(location.href);
     url.searchParams.set('lang', nextLang);
     location.href = url.toString();
   });
   document.body.appendChild(toggle);
+}
+
+async function switchDemoLanguage(lang) {
+  try {
+    await fetch('/api/demo-language', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lang })
+    });
+  } catch {
+    // Production deployments may disable public demo switching. UI language still changes.
+  }
 }
 
 window.osaI18n = {

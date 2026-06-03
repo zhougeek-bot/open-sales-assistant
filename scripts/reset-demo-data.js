@@ -1,31 +1,28 @@
-import { execFile } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { promisify } from 'node:util';
 
-const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(path.dirname(__filename), '..');
 const dbPath = path.join(rootDir, 'data', 'db.json');
+const fixturesDir = path.join(rootDir, 'data', 'fixtures');
+
+function parseLang() {
+  const index = process.argv.findIndex((arg) => arg === '--lang');
+  const value = index >= 0 ? process.argv[index + 1] : 'en';
+  if (value === 'en' || value === 'zh-CN') return value;
+  throw new Error('Unsupported demo language. Use --lang en or --lang zh-CN.');
+}
 
 async function main() {
-  let stdout;
-  try {
-    ({ stdout } = await execFileAsync('git', ['show', 'HEAD:data/db.json'], {
-      cwd: rootDir,
-      maxBuffer: 10 * 1024 * 1024
-    }));
-  } catch (error) {
-    console.error('Unable to read data/db.json from Git HEAD.');
-    console.error('Run this command from a cloned Git repository with data/db.json committed.');
-    throw error;
-  }
+  const lang = parseLang();
+  const fixturePath = path.join(fixturesDir, `demo.${lang}.json`);
+  const fixture = await fs.readFile(fixturePath, 'utf8');
 
-  JSON.parse(stdout);
+  JSON.parse(fixture);
   await fs.mkdir(path.dirname(dbPath), { recursive: true });
-  await fs.writeFile(dbPath, stdout, 'utf8');
-  console.log('Restored data/db.json from Git HEAD.');
+  await fs.writeFile(dbPath, fixture, 'utf8');
+  console.log(`Restored data/db.json from ${path.relative(rootDir, fixturePath)}.`);
 }
 
 main().catch((error) => {

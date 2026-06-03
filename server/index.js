@@ -18,6 +18,7 @@ const rootDir = path.resolve(__dirname, '..');
 const publicDir = path.join(rootDir, 'public');
 const uploadsDir = path.join(rootDir, 'uploads');
 const dataDir = path.join(rootDir, 'data');
+const fixturesDir = path.join(dataDir, 'fixtures');
 const dbPath = path.join(dataDir, 'db.json');
 const backupDir = process.env.DATA_BACKUP_DIR
   ? path.resolve(process.env.DATA_BACKUP_DIR)
@@ -31,14 +32,16 @@ const storageDriver = (process.env.STORAGE_DRIVER || 'json').toLowerCase();
 if (storageDriver !== 'json') {
   throw new Error(`Unsupported STORAGE_DRIVER "${storageDriver}". The current release supports "json" only.`);
 }
+const demoLanguageSwitchEnabled = process.env.DEMO_LANGUAGE_SWITCH === 'true' || process.env.NODE_ENV !== 'production';
 const defaultSettings = {
-  siteName: '智培通咨询助手',
-  welcomeText: '你好，我是咨询顾问。你可以直接问适合人群、学习安排、证书流程、费用和报名方式。',
-  serviceName: '张老师',
+  demoLanguage: 'en',
+  siteName: 'Open Sales Assistant',
+  welcomeText: 'Hi, I am your sales advisor. You can ask about product fit, schedule, pricing, process, and next steps.',
+  serviceName: 'Alex',
   servicePhone: '',
-  salesPersona: '亲切、专业、不过度承诺，像有经验的团队销售顾问一样回答。',
-  contactHint: '如果你愿意，我可以继续帮你梳理适合的项目、近期安排和报名流程。',
-  safetyRules: '不能承诺包过、保拿证、百分百就业；价格、证书政策、开课时间以团队最新确认信息为准。'
+  salesPersona: 'Friendly, professional, specific, and careful with promises. Reply like an experienced team sales advisor.',
+  contactHint: 'If you want, I can help you compare the right option, schedule, and next steps.',
+  safetyRules: 'Do not guarantee passing, certification, employment, income, or outcomes. Pricing, policy, and schedule must follow the team latest confirmed information.'
 };
 const adminSessionHours = 12;
 
@@ -213,6 +216,30 @@ async function writeDb(db, options = {}) {
   const tempPath = `${dbPath}.tmp`;
   await fs.writeFile(tempPath, JSON.stringify(nextDb, null, 2), 'utf8');
   await fs.rename(tempPath, dbPath);
+}
+
+function normalizeDemoLanguage(lang = 'en') {
+  if (lang === 'zh' || lang === 'zh-CN') return 'zh-CN';
+  return 'en';
+}
+
+async function loadDemoFixture(lang = 'en') {
+  const demoLanguage = normalizeDemoLanguage(lang);
+  const fixturePath = path.join(fixturesDir, `demo.${demoLanguage}.json`);
+  const fixture = JSON.parse(await fs.readFile(fixturePath, 'utf8'));
+  fixture.settings = {
+    ...(fixture.settings || {}),
+    demoLanguage
+  };
+  return fixture;
+}
+
+function preserveAdminState(nextDb, currentDb) {
+  return {
+    ...nextDb,
+    adminUsers: Array.isArray(currentDb.adminUsers) ? currentDb.adminUsers : nextDb.adminUsers,
+    adminSessions: Array.isArray(currentDb.adminSessions) ? currentDb.adminSessions : []
+  };
 }
 
 function normalizeText(text = '') {
@@ -868,6 +895,39 @@ app.get('/api/health', (_req, res) => {
     textModel: process.env.AI_TEXT_MODEL || defaultTextModel(),
     visionModel: process.env.AI_VISION_MODEL || defaultVisionModel()
   });
+});
+
+app.get('/api/demo-language', async (_req, res, next) => {
+  try {
+    const db = await readDb();
+    res.json({
+      language: normalizeDemoLanguage(db.settings?.demoLanguage || 'en'),
+      switchEnabled: demoLanguageSwitchEnabled
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/demo-language', async (req, res, next) => {
+  try {
+    if (!demoLanguageSwitchEnabled) {
+      res.status(403).json({
+        error: 'Demo language switching is disabled in production. Set DEMO_LANGUAGE_SWITCH=true to enable it explicitly.'
+      });
+      return;
+    }
+    const lang = normalizeDemoLanguage(req.body.lang || req.body.language);
+    const currentDb = await readDb();
+    const nextDb = preserveAdminState(await loadDemoFixture(lang), currentDb);
+    await writeDb(nextDb);
+    res.json({
+      language: lang,
+      settings: nextDb.settings
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post('/api/student/register', async (req, res, next) => {

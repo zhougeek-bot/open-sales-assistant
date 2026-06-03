@@ -9,6 +9,8 @@
     "check": "node --check server/index.js && node --check public/i18n.js && node --check public/admin.js && node --check public/chat.js && node --check public/login.js",
     "smoke": "node scripts/smoke-test.js",
     "reset-demo": "node scripts/reset-demo-data.js",
+    "reset-demo:en": "node scripts/reset-demo-data.js --lang en",
+    "reset-demo:zh": "node scripts/reset-demo-data.js --lang zh-CN",
     "test": "npm run check && npm run smoke"
   },
   "dependencies": {

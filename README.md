@@ -19,7 +19,8 @@ For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese
 - Certificate record import and query demo flow.
 - JSON-file storage for local development and small self-hosted trials.
 - Planned optional database adapters while keeping JSON storage as the default lightweight mode.
-- English/Chinese UI switch for the customer chat, admin login, and admin console.
+- English-first UI with an English/Chinese switch for customer chat, admin login, and admin console.
+- English and Chinese demo fixtures. Local demo mode can switch the demo dataset together with the UI language.
 
 ## Quick Start
 
@@ -146,7 +147,14 @@ To restore the committed demo dataset after local experiments:
 npm run reset-demo
 ```
 
-The reset script restores `data/db.json` from the current Git `HEAD`. It refuses to run when the project is not inside a Git checkout.
+Language-specific demo reset commands:
+
+```bash
+npm run reset-demo:en
+npm run reset-demo:zh
+```
+
+The default UI language is English. Selecting Chinese from the UI switches the interface to Chinese and, in local demo mode, switches the demo dataset to the Chinese fixture. In production, public demo switching is disabled unless `DEMO_LANGUAGE_SWITCH=true` is explicitly configured.
 
 ## Open Source Boundary
 
