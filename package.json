@@ -7,7 +7,9 @@
     "dev": "node server/index.js",
     "start": "NODE_ENV=production node server/index.js",
     "check": "node --check server/index.js && node --check public/admin.js && node --check public/chat.js && node --check public/login.js",
-    "test": "npm run check"
+    "smoke": "node scripts/smoke-test.js",
+    "reset-demo": "node scripts/reset-demo-data.js",
+    "test": "npm run check && npm run smoke"
   },
   "dependencies": {
     "cors": "^2.8.5",

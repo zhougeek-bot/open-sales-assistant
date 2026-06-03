@@ -39,6 +39,14 @@ ADMIN_PASSWORD=请设置一个强密码
 
 Set `AI_API_KEY` before using AI analysis or chat generation.
 
+## Development Checks
+
+```bash
+npm test
+```
+
+The test command runs JavaScript syntax checks and a local smoke test for the health endpoint plus the main static pages. It does not require an AI API key.
+
 ## Demo Data
 
 `data/db.json` contains sample training-institution sales data. Treat it as demo content only:
@@ -46,6 +54,14 @@ Set `AI_API_KEY` before using AI analysis or chat generation.
 - It demonstrates how sales materials become a knowledge base.
 - It is not a production dataset.
 - Replace it with your own product, service, pricing, FAQ, and compliance rules before real use.
+
+To restore the committed demo dataset after local experiments:
+
+```bash
+npm run reset-demo
+```
+
+The reset script restores `data/db.json` from the current Git `HEAD`. It refuses to run when the project is not inside a Git checkout.
 
 ## Open Source Boundary
 
