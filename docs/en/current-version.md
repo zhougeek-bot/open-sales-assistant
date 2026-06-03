@@ -84,6 +84,8 @@ data/backups/
 
 `.gitignore` excludes `.env`, `uploads/`, and `data/backups/`.
 
+JSON storage remains the default lightweight mode for local demos and small self-hosted trials. Future PostgreSQL/MySQL support should be added through optional storage adapters instead of replacing JSON storage.
+
 ## 6. Current Limitations
 
 - No sales member roles or permissions.
@@ -101,7 +103,7 @@ Priority areas:
 2. Operation logs.
 3. Knowledge versioning and editable AI suggestions.
 4. Basic tests and prompt evaluation.
-5. Docker and database adapters.
+5. Docker and optional database adapters that preserve JSON mode.
 
 See:
 

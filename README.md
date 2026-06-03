@@ -18,6 +18,7 @@ For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese
 - Customer profile, chat history, AI analysis, and follow-up records.
 - Certificate record import and query demo flow.
 - JSON-file storage for local development and small self-hosted trials.
+- Planned optional database adapters while keeping JSON storage as the default lightweight mode.
 
 ## Quick Start
 
@@ -110,6 +111,7 @@ Start here:
 | Roadmap | [roadmap.md](docs/en/roadmap.md) | [团队销售工具全功能开发与迭代计划.md](docs/团队销售工具全功能开发与迭代计划.md) |
 | Development plan | [development-plan.md](docs/en/development-plan.md) | [开发计划.md](docs/开发计划.md) |
 | Data migration and backup | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) |
+| Storage strategy | [storage-strategy.md](docs/en/storage-strategy.md) | [存储策略.md](docs/存储策略.md) |
 | Server deployment | [server-deployment.md](docs/en/server-deployment.md) | [服务器部署说明.md](docs/服务器部署说明.md) |
 | BT Panel deployment | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) |
 
@@ -143,11 +145,14 @@ This repository is not a SaaS platform. The current goal is to provide a clear, 
 
 Future work may add stronger team collaboration, role permissions, database storage, integrations, and evaluation workflows, but the open-source baseline remains focused on helping a team own its sales assistant without depending on a hosted commercial platform.
 
+JSON file storage will remain supported as the default lightweight mode. Future PostgreSQL/MySQL support should be added through optional storage adapters, not by removing the current JSON workflow.
+
 ## Roadmap
 
 - Improve sales follow-up workspace: status, owner, next action, and reminders.
 - Add operation logs and safer data backup/restore workflows.
 - Add editable AI suggestions and knowledge version history.
+- Add optional PostgreSQL/MySQL storage adapters while preserving JSON storage.
 - Add customer segmentation and sales funnel dashboards.
 - Add connector examples for CRM, forms, chat tools, and spreadsheets.
 - Add tests and prompt evaluation cases for stable community contributions.

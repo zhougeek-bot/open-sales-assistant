@@ -25,6 +25,7 @@ The committed demo data uses a training-course sales scenario. Future examples c
 - Customer profiles, chat history, AI-generated profile analysis, and follow-up records.
 - Certificate lookup as a demo business module.
 - Data export, manual backup, and deployment documentation.
+- JSON storage remains the default lightweight mode; database adapters are planned as optional modes.
 
 ## 3. Iteration Plan
 
@@ -66,7 +67,7 @@ Goal: make self-hosting safer and easier.
 - Continue improving data migration.
 - Add restore tooling.
 - Add operation logs.
-- Add optional PostgreSQL or MySQL support.
+- Add optional PostgreSQL or MySQL support without removing JSON storage.
 - Add Docker deployment.
 - Add a production deployment checklist.
 
@@ -83,6 +84,7 @@ Goal: connect the assistant with existing team tools.
 ## 4. Open-Source Maintenance Goals
 
 - Keep each iteration self-hostable.
+- Keep JSON storage available for local demos and lightweight self-hosting.
 - Never commit customer data, commercial deployment config, or private API keys.
 - Validate new features with demo data and reproducible tests.
 - Use issues and pull requests to maintain a visible roadmap.

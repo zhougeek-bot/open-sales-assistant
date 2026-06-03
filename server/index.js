@@ -27,6 +27,10 @@ const currentSchemaVersion = 2;
 const app = express();
 const port = Number(process.env.PORT || 3100);
 const publicBaseUrl = process.env.PUBLIC_BASE_URL || `http://localhost:${port}`;
+const storageDriver = (process.env.STORAGE_DRIVER || 'json').toLowerCase();
+if (storageDriver !== 'json') {
+  throw new Error(`Unsupported STORAGE_DRIVER "${storageDriver}". The current release supports "json" only.`);
+}
 const defaultSettings = {
   siteName: '智培通咨询助手',
   welcomeText: '你好，我是咨询顾问。你可以直接问适合人群、学习安排、证书流程、费用和报名方式。',

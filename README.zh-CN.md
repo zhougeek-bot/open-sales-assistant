@@ -27,6 +27,7 @@ Open Sales Assistant 是一个面向团队和个人销售的自部署开源智�
 - 客户画像、聊天历史、AI 分析和跟进记录。
 - 证书记录导入和查询 demo 流程。
 - 基于 JSON 文件的本地存储，适合开发和小规模自部署试用。
+- 计划增加可选数据库适配，同时保留 JSON 作为默认轻量存储模式。
 
 ## 快速启动
 
@@ -114,6 +115,7 @@ AI_VISION_MODEL=qwen-vl-plus
 | Roadmap | [团队销售工具全功能开发与迭代计划.md](docs/团队销售工具全功能开发与迭代计划.md) | [roadmap.md](docs/en/roadmap.md) |
 | 开发计划 | [开发计划.md](docs/开发计划.md) | [development-plan.md](docs/en/development-plan.md) |
 | 数据迁移与备份 | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) |
+| 存储策略 | [存储策略.md](docs/存储策略.md) | [storage-strategy.md](docs/en/storage-strategy.md) |
 | 服务器部署 | [服务器部署说明.md](docs/服务器部署说明.md) | [server-deployment.md](docs/en/server-deployment.md) |
 | 宝塔面板部署 | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) |
 
@@ -152,11 +154,14 @@ npm run reset-demo
 
 但当前开源基线仍然聚焦在：让团队可以拥有自己的销售助手，而不是依赖一个托管的商业 SaaS 平台。
 
+JSON 文件存储会继续作为默认轻量模式保留。后续 PostgreSQL/MySQL 应通过可选 storage adapter 加入，而不是删除当前 JSON 工作流。
+
 ## Roadmap
 
 - 改进销售跟进工作台：状态、负责人、下一步动作和提醒。
 - 增加操作日志和更安全的数据备份/恢复流程。
 - 增加可编辑 AI 建议和知识版本历史。
+- 增加可选 PostgreSQL/MySQL 存储适配，同时保留 JSON 存储。
 - 增加客户分层和销售漏斗看板。
 - 增加 CRM、表单、聊天工具、表格等连接器示例。
 - 增加测试和 prompt evaluation 用例，方便社区稳定贡献。
