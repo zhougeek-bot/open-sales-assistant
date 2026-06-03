@@ -7,6 +7,10 @@ const requiredPages = [
   ['/admin.html', '知识库后台管理']
 ];
 
+const requiredAssets = [
+  ['/i18n.js', 'language-toggle']
+];
+
 function getFreePort() {
   return new Promise((resolve, reject) => {
     const server = net.createServer();
@@ -75,6 +79,13 @@ async function main() {
       const html = await fetchText(`${baseUrl}${route}`);
       if (!html.includes(`<title>${expectedTitle}</title>`)) {
         throw new Error(`${route} did not include expected title: ${expectedTitle}`);
+      }
+    }
+
+    for (const [route, expectedText] of requiredAssets) {
+      const content = await fetchText(`${baseUrl}${route}`);
+      if (!content.includes(expectedText)) {
+        throw new Error(`${route} did not include expected content: ${expectedText}`);
       }
     }
 

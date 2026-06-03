@@ -19,6 +19,7 @@ For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese
 - Certificate record import and query demo flow.
 - JSON-file storage for local development and small self-hosted trials.
 - Planned optional database adapters while keeping JSON storage as the default lightweight mode.
+- English/Chinese UI switch for the customer chat, admin login, and admin console.
 
 ## Quick Start
 
