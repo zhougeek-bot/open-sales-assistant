@@ -1,8 +1,12 @@
 # Open Sales Assistant
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 Open Sales Assistant is a self-hosted AI sales assistant starter kit for small teams and individual sales workflows. It helps a team turn sales materials into a searchable knowledge base, answer customer questions, review AI-generated sales suggestions, and keep basic customer follow-up records.
 
 The included dataset is demo data for a training course sales scenario. It is kept as an initial example so new users can run the project immediately and understand the workflow.
+
+For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese project overview, quick start, AI API configuration, and roadmap.
 
 ## Features
 
@@ -94,6 +98,11 @@ AI_VISION_MODEL=qwen-vl-plus
 The `/api/health` endpoint only reports whether AI is configured and which model names are active. It never returns the API key.
 
 ## Documentation
+
+Start here:
+
+- English overview: [README.md](README.md)
+- Chinese overview: [README.zh-CN.md](README.zh-CN.md)
 
 | Topic | English | Chinese |
 | --- | --- | --- |
