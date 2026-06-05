@@ -1110,6 +1110,12 @@ app.post('/api/admin/login', async (req, res, next) => {
     };
     db.adminSessions = db.adminSessions.filter((item) => item.expiresAt > now());
     db.adminSessions.push(session);
+    addOperationLog(db, { adminUser: user }, 'auth.login', {
+      type: 'admin',
+      id: user.id,
+      label: user.realName || user.username,
+      summary: 'Admin signed in'
+    });
     await writeDb(db);
     res.json({
       token,
@@ -1125,10 +1131,17 @@ app.get('/api/admin/me', requireAdmin, async (req, res) => {
   res.json({ user: req.adminUser });
 });
 
-app.get('/api/admin/data/export', requireAdmin, async (_req, res, next) => {
+app.get('/api/admin/data/export', requireAdmin, async (req, res, next) => {
   try {
     const db = await readDb();
     const exportedAt = now();
+    addOperationLog(db, req, 'data.export', {
+      type: 'data',
+      id: 'export',
+      label: 'Data export',
+      summary: `Exported JSON data on ${exportedAt.slice(0, 10)}`
+    });
+    await writeDb(db);
     const payload = {
       exportedAt,
       service: 'open-sales-assistant',
@@ -1144,9 +1157,17 @@ app.get('/api/admin/data/export', requireAdmin, async (_req, res, next) => {
   }
 });
 
-app.post('/api/admin/data/backup', requireAdmin, async (_req, res, next) => {
+app.post('/api/admin/data/backup', requireAdmin, async (req, res, next) => {
   try {
     const backupPath = await createBackup('manual');
+    const db = await readDb();
+    addOperationLog(db, req, 'data.backup', {
+      type: 'data',
+      id: 'backup',
+      label: 'Manual backup',
+      summary: backupPath ? `Created backup ${path.basename(backupPath)}` : 'Backup skipped because no data file exists'
+    });
+    await writeDb(db);
     res.json({
       ok: true,
       backupPath,

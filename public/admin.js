@@ -107,6 +107,9 @@ function renderMetrics() {
 
 function operationActionText(action = '') {
   return ({
+    'auth.login': 'Admin signed in',
+    'data.export': 'Exported data',
+    'data.backup': 'Created backup',
     'student.analyze': 'AI analyzed customer',
     'student.update': 'Updated customer',
     'student.delete': 'Deleted customer',

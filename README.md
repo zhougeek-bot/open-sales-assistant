@@ -16,7 +16,7 @@ For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese
 - AI-assisted material analysis and pending suggestions.
 - FAQ, sales playbook, concern handling, and knowledge summary editing.
 - Customer profile, chat history, AI analysis, and follow-up records.
-- Admin operation logs for key knowledge, material, customer, certificate, and settings changes.
+- Admin operation logs for sign-in, data export/backup, knowledge, material, customer, certificate, and settings changes.
 - Certificate record import and query demo flow.
 - JSON-file storage for local development and small self-hosted trials.
 - Planned optional database adapters while keeping JSON storage as the default lightweight mode.
