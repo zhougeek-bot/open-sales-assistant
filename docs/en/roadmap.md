@@ -23,6 +23,7 @@ The committed demo data uses a training-course sales scenario. Future examples c
 - Material upload, AI analysis, and reviewable knowledge suggestions.
 - Sales playbook, FAQ, objection handling, and knowledge summary editing.
 - Customer profiles, chat history, AI-generated profile analysis, and follow-up records.
+- Basic admin operation logs for key write actions.
 - Certificate lookup as a demo business module.
 - Data export, manual backup, and deployment documentation.
 - JSON storage remains the default lightweight mode; database adapters are planned as optional modes.
@@ -66,7 +67,7 @@ Goal: make self-hosting safer and easier.
 
 - Continue improving data migration.
 - Add restore tooling.
-- Add operation logs.
+- Improve operation log filters, detail views, and export.
 - Add optional PostgreSQL or MySQL support without removing JSON storage.
 - Improve Docker deployment and containerized self-hosting examples.
 - Add a production deployment checklist.

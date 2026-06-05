@@ -16,6 +16,7 @@ For Chinese readers, see [README.zh-CN.md](README.zh-CN.md) for the full Chinese
 - AI-assisted material analysis and pending suggestions.
 - FAQ, sales playbook, concern handling, and knowledge summary editing.
 - Customer profile, chat history, AI analysis, and follow-up records.
+- Admin operation logs for key knowledge, material, customer, certificate, and settings changes.
 - Certificate record import and query demo flow.
 - JSON-file storage for local development and small self-hosted trials.
 - Planned optional database adapters while keeping JSON storage as the default lightweight mode.
@@ -167,7 +168,7 @@ JSON file storage will remain supported as the default lightweight mode. Future 
 ## Roadmap
 
 - Improve sales follow-up workspace: status, owner, next action, and reminders.
-- Add operation logs and safer data backup/restore workflows.
+- Improve operation logs and safer data backup/restore workflows.
 - Add editable AI suggestions and knowledge version history.
 - Add optional PostgreSQL/MySQL storage adapters while preserving JSON storage.
 - Improve Docker deployment and production self-hosting examples.

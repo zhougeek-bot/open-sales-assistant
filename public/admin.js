@@ -9,6 +9,7 @@ const state = {
   students: [],
   chats: [],
   certificates: [],
+  operationLogs: [],
   selectedStudentId: '',
   selectedStudentDetail: null,
   studentQuery: '',
@@ -102,6 +103,42 @@ function renderMetrics() {
   $('#faqCount').textContent = (knowledge.faq || []).length;
   $('#playbookCount').textContent = (knowledge.salesPlaybook || []).length;
   $('#overviewPreview').textContent = knowledge.overview || '暂无知识库内容。';
+}
+
+function operationActionText(action = '') {
+  return ({
+    'student.analyze': 'AI analyzed customer',
+    'student.update': 'Updated customer',
+    'student.delete': 'Deleted customer',
+    'followup.create': 'Added follow-up',
+    'settings.update': 'Updated settings',
+    'material.create': 'Added text material',
+    'material.upload': 'Uploaded material',
+    'material.delete': 'Deleted material',
+    'certificate.create': 'Added certificate',
+    'certificate.import': 'Imported certificates',
+    'certificate.update': 'Updated certificate',
+    'certificate.delete': 'Deleted certificate',
+    'knowledge.update': 'Updated knowledge base',
+    'knowledge.generate': 'Regenerated knowledge base',
+    'suggestion.accept': 'Accepted AI suggestion',
+    'suggestion.ignore': 'Ignored AI suggestion'
+  })[action] || action || 'Operation';
+}
+
+function renderOperationLogs() {
+  const box = $('#operationLogsList');
+  if (!state.operationLogs.length) {
+    box.innerHTML = '<p class="empty-text">No operation logs yet.</p>';
+    return;
+  }
+  box.innerHTML = state.operationLogs.slice(0, 8).map((item) => `
+    <article class="operation-log-item">
+      <strong>${escapeHtml(operationActionText(item.action))}</strong>
+      <p>${escapeHtml([item.targetLabel, item.summary].filter(Boolean).join(' · ') || '-')}</p>
+      <p>${escapeHtml(item.actorName || 'System')} · ${formatDate(item.createdAt)}</p>
+    </article>
+  `).join('');
 }
 
 function renderStudents() {
@@ -514,6 +551,7 @@ async function ignoreSuggestion(id) {
 function renderAll() {
   renderSettings();
   renderMetrics();
+  renderOperationLogs();
   renderStudents();
   renderCertificates();
   renderMaterials();
@@ -521,12 +559,13 @@ function renderAll() {
 }
 
 async function loadAll() {
-  const [settingsData, materialsData, knowledgeData, studentsData, certificatesData] = await Promise.all([
+  const [settingsData, materialsData, knowledgeData, studentsData, certificatesData, operationLogsData] = await Promise.all([
     api('/api/settings'),
     api('/api/materials'),
     api('/api/knowledge'),
     api('/api/admin/students'),
-    api('/api/admin/certificates')
+    api('/api/admin/certificates'),
+    api('/api/admin/operation-logs')
   ]);
   state.settings = settingsData.settings;
   state.materials = materialsData.materials || [];
@@ -534,6 +573,7 @@ async function loadAll() {
   state.suggestions = knowledgeData.suggestions || [];
   state.students = studentsData.students || [];
   state.certificates = certificatesData.certificates || [];
+  state.operationLogs = operationLogsData.operationLogs || [];
   renderAll();
   if (state.selectedStudentId && state.students.some((student) => student.id === state.selectedStudentId)) {
     await loadStudentDetail(state.selectedStudentId);

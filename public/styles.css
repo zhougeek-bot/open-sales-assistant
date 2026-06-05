@@ -1678,3 +1678,33 @@ button:disabled {
 .language-toggle:hover {
   transform: translateY(-1px);
 }
+
+.section-head-inline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.operation-log-list {
+  display: grid;
+  gap: 10px;
+}
+
+.operation-log-item {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.06), rgba(37, 99, 235, 0.04));
+}
+
+.operation-log-item strong {
+  color: var(--text);
+}
+
+.operation-log-item p {
+  margin: 0;
+  color: var(--muted);
+}

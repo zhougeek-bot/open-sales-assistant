@@ -43,6 +43,8 @@ const exactText = {
   '销售话术': 'Sales Playbook',
   '当前知识库摘要': 'Current Knowledge Summary',
   '暂无知识库内容。': 'No knowledge content yet.',
+  '最近操作日志': 'Recent Operation Logs',
+  '暂无操作日志': 'No operation logs yet',
   '学员列表': 'Customer List',
   '最近注册': 'Newest',
   '最近咨询': 'Recent Chat',

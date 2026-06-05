@@ -26,7 +26,7 @@ Not suitable for:
 | --- | --- | --- |
 | Customer chat | `http://localhost:3100/` | Nickname registration, chat, certificate lookup, profile center |
 | Admin login | `http://localhost:3100/login.html` | Admin username/password login |
-| Admin console | `http://localhost:3100/admin.html` | Knowledge base, customers, certificates, materials, settings |
+| Admin console | `http://localhost:3100/admin.html` | Knowledge base, customers, certificates, materials, settings, operation logs |
 | Health check | `http://localhost:3100/api/health` | Service status |
 
 ## 3. AI Configuration
@@ -92,7 +92,7 @@ Dockerfile and Docker Compose deployment are available for containerized self-ho
 
 - No sales member roles or permissions.
 - No customer owner, follow-up reminders, or funnel views.
-- No operation logs yet.
+- Basic operation logs are available for key admin write actions.
 - No knowledge base version rollback.
 - No AI usage or cost statistics.
 - JSON storage is not suitable for high-concurrency multi-user writes.
@@ -102,7 +102,7 @@ Dockerfile and Docker Compose deployment are available for containerized self-ho
 Priority areas:
 
 1. Team sales workspace.
-2. Operation logs.
+2. Stronger operation log filters, detail views, and export.
 3. Knowledge versioning and editable AI suggestions.
 4. Basic tests and prompt evaluation.
 5. Optional database adapters that preserve JSON mode.

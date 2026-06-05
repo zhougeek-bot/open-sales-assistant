@@ -14,6 +14,7 @@ This project follows a lightweight release log while the project is still in ear
 - Added an English/Chinese UI switch for customer chat, admin login, and admin console pages.
 - Replaced the default demo dataset with a cleaner English training-course sales scenario.
 - Made English the default UI language and added English/Chinese demo fixtures with language-specific reset commands.
+- Added admin operation logs for key customer, material, certificate, settings, and knowledge-base changes.
 
 ## v0.1.0 - 2026-06-03
 

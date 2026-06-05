@@ -105,6 +105,7 @@ function withDefaults(db) {
     followUps: Array.isArray(db.followUps) ? db.followUps : [],
     aiAnalysis: Array.isArray(db.aiAnalysis) ? db.aiAnalysis : [],
     knowledgeSuggestions: Array.isArray(db.knowledgeSuggestions) ? db.knowledgeSuggestions : [],
+    operationLogs: Array.isArray(db.operationLogs) ? db.operationLogs : [],
     adminUsers: Array.isArray(db.adminUsers) ? db.adminUsers : [],
     adminSessions: Array.isArray(db.adminSessions) ? db.adminSessions : [],
     settings: { ...defaultSettings, ...(db.settings || {}) }
@@ -238,8 +239,38 @@ function preserveAdminState(nextDb, currentDb) {
   return {
     ...nextDb,
     adminUsers: Array.isArray(currentDb.adminUsers) ? currentDb.adminUsers : nextDb.adminUsers,
-    adminSessions: Array.isArray(currentDb.adminSessions) ? currentDb.adminSessions : []
+    adminSessions: Array.isArray(currentDb.adminSessions) ? currentDb.adminSessions : [],
+    operationLogs: Array.isArray(currentDb.operationLogs) ? currentDb.operationLogs : []
   };
+}
+
+function addOperationLog(db, req, action, target = {}) {
+  const admin = req.adminUser || {};
+  const log = {
+    id: newId('oplog'),
+    action,
+    targetType: target.type || '',
+    targetId: target.id || '',
+    targetLabel: normalizeText(target.label || ''),
+    summary: normalizeText(target.summary || ''),
+    actorId: admin.id || '',
+    actorName: admin.realName || admin.username || 'System',
+    createdAt: now()
+  };
+  db.operationLogs = [log, ...(Array.isArray(db.operationLogs) ? db.operationLogs : [])].slice(0, 200);
+  return log;
+}
+
+function shortLog(text = '', max = 140) {
+  const clean = normalizeText(text);
+  return clean.length > max ? `${clean.slice(0, max)}...` : clean;
+}
+
+function suggestionTitleForLog(suggestion = {}) {
+  if (suggestion.type === 'playbook') return suggestion.title || 'Sales script suggestion';
+  if (suggestion.type === 'faq') return suggestion.question || 'FAQ suggestion';
+  if (suggestion.type === 'concern') return suggestion.concern || 'Objection suggestion';
+  return suggestion.sourceMaterialTitle || 'AI suggestion';
 }
 
 function normalizeText(text = '') {
@@ -1156,6 +1187,15 @@ app.get('/api/admin/dashboard', requireAdmin, async (_req, res, next) => {
   }
 });
 
+app.get('/api/admin/operation-logs', requireAdmin, async (_req, res, next) => {
+  try {
+    const db = await readDb();
+    res.json({ operationLogs: (db.operationLogs || []).slice(0, 50) });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/admin/students', requireAdmin, async (_req, res, next) => {
   try {
     const db = await readDb();
@@ -1241,6 +1281,12 @@ app.post('/api/admin/students/:id/analyze', requireAdmin, async (req, res, next)
     };
     db.aiAnalysis = db.aiAnalysis.filter((item) => item.studentId !== student.id);
     db.aiAnalysis.unshift(analysis);
+    addOperationLog(db, req, 'student.analyze', {
+      type: 'student',
+      id: student.id,
+      label: student.name || student.nickname,
+      summary: `Analyzed customer intent as ${student.intentLevel || 'unknown'}`
+    });
     await writeDb(db);
     res.json({ analysis, student: publicStudent(student) });
   } catch (error) {
@@ -1291,6 +1337,12 @@ app.put('/api/admin/students/:id', requireAdmin, async (req, res, next) => {
     student.intentLevel = normalizeText(req.body.intentLevel || 'unknown');
     student.profileSummary = normalizeText(req.body.profileSummary || '');
     student.nextAction = normalizeText(req.body.nextAction || '');
+    addOperationLog(db, req, 'student.update', {
+      type: 'student',
+      id: student.id,
+      label: student.name || student.nickname,
+      summary: 'Updated customer profile'
+    });
     await writeDb(db);
     res.json({ student: publicStudent(student) });
   } catch (error) {
@@ -1311,6 +1363,12 @@ app.delete('/api/admin/students/:id', requireAdmin, async (req, res, next) => {
     db.chats = db.chats.filter((item) => item.studentId !== student.id);
     db.followUps = db.followUps.filter((item) => item.studentId !== student.id);
     db.aiAnalysis = db.aiAnalysis.filter((item) => item.studentId !== student.id);
+    addOperationLog(db, req, 'student.delete', {
+      type: 'student',
+      id: student.id,
+      label: student.name || student.nickname,
+      summary: 'Deleted customer and related records'
+    });
     await writeDb(db);
     res.json({ ok: true });
   } catch (error) {
@@ -1340,6 +1398,12 @@ app.post('/api/admin/students/:id/followups', requireAdmin, async (req, res, nex
       createdAt: now()
     };
     db.followUps.unshift(followUp);
+    addOperationLog(db, req, 'followup.create', {
+      type: 'student',
+      id: student.id,
+      label: student.name || student.nickname,
+      summary: shortLog(content)
+    });
     await writeDb(db);
     res.json({ followUp });
   } catch (error) {
@@ -1378,6 +1442,12 @@ app.put('/api/settings', requireAdmin, async (req, res, next) => {
       contactHint: normalizeText(req.body.contactHint || db.settings.contactHint),
       safetyRules: normalizeText(req.body.safetyRules || db.settings.safetyRules)
     };
+    addOperationLog(db, req, 'settings.update', {
+      type: 'settings',
+      id: 'settings',
+      label: db.settings.siteName,
+      summary: 'Updated consultation settings'
+    });
     await writeDb(db);
     res.json({ settings: db.settings });
   } catch (error) {
@@ -1491,6 +1561,12 @@ app.post('/api/materials/text', requireAdmin, async (req, res, next) => {
     const suggestions = createKnowledgeSuggestions(material, officialKnowledge(db));
     db.materials.unshift(material);
     db.knowledgeSuggestions.unshift(...suggestions);
+    addOperationLog(db, req, 'material.create', {
+      type: 'material',
+      id: material.id,
+      label: material.title,
+      summary: `Added text material with ${suggestions.length} suggestion(s)`
+    });
     await writeDb(db);
     res.json({ material, suggestions });
   } catch (error) {
@@ -1531,6 +1607,12 @@ app.post('/api/materials/upload', requireAdmin, upload.array('files', 12), async
       db.knowledgeSuggestions.unshift(...suggestions);
       created.push({ ...material, suggestionCount: suggestions.length });
     }
+    addOperationLog(db, req, 'material.upload', {
+      type: 'material',
+      id: created[0]?.id || '',
+      label: created.map((item) => item.title).join(', '),
+      summary: `Uploaded ${created.length} file material(s)`
+    });
     await writeDb(db);
     res.json({ materials: created, suggestions: db.knowledgeSuggestions.filter((item) => created.some((material) => material.id === item.sourceMaterialId)) });
   } catch (error) {
@@ -1547,6 +1629,12 @@ app.delete('/api/materials/:id', requireAdmin, async (req, res, next) => {
       await fs.rm(path.join(rootDir, material.filePath), { force: true });
     }
     db.knowledgeSuggestions = db.knowledgeSuggestions.filter((item) => item.sourceMaterialId !== req.params.id);
+    addOperationLog(db, req, 'material.delete', {
+      type: 'material',
+      id: req.params.id,
+      label: material?.title || req.params.id,
+      summary: 'Deleted material and related pending suggestions'
+    });
     await writeDb(db);
     res.json({ ok: true });
   } catch (error) {
@@ -1679,6 +1767,12 @@ app.post('/api/admin/certificates', requireAdmin, async (req, res, next) => {
       createdAt: now()
     };
     db.certificates.unshift(cert);
+    addOperationLog(db, req, 'certificate.create', {
+      type: 'certificate',
+      id: cert.id,
+      label: cert.name || cert.certNo,
+      summary: 'Added certificate record'
+    });
     await writeDb(db);
     res.json({ certificate: cert });
   } catch (error) {
@@ -1706,6 +1800,12 @@ app.post('/api/admin/certificates/import', requireAdmin, upload.single('file'), 
       createdAt: now()
     }));
     db.certificates.unshift(...certificates);
+    addOperationLog(db, req, 'certificate.import', {
+      type: 'certificate',
+      id: '',
+      label: req.file.originalname,
+      summary: `Imported ${certificates.length} certificate record(s)`
+    });
     await writeDb(db);
     await fs.rm(req.file.path, { force: true });
     res.json({ imported: certificates.length, certificates });
@@ -1732,6 +1832,12 @@ app.put('/api/admin/certificates/:id', requireAdmin, async (req, res, next) => {
       issuedAt: normalizeText(req.body.issuedAt || cert.issuedAt),
       updatedAt: now()
     });
+    addOperationLog(db, req, 'certificate.update', {
+      type: 'certificate',
+      id: cert.id,
+      label: cert.name || cert.certNo,
+      summary: 'Updated certificate record'
+    });
     await writeDb(db);
     res.json({ certificate: cert });
   } catch (error) {
@@ -1742,7 +1848,14 @@ app.put('/api/admin/certificates/:id', requireAdmin, async (req, res, next) => {
 app.delete('/api/admin/certificates/:id', requireAdmin, async (req, res, next) => {
   try {
     const db = await readDb();
+    const cert = db.certificates.find((item) => item.id === req.params.id);
     db.certificates = db.certificates.filter((item) => item.id !== req.params.id);
+    addOperationLog(db, req, 'certificate.delete', {
+      type: 'certificate',
+      id: req.params.id,
+      label: cert?.name || cert?.certNo || req.params.id,
+      summary: 'Deleted certificate record'
+    });
     await writeDb(db);
     res.json({ ok: true });
   } catch (error) {
@@ -1783,6 +1896,12 @@ app.put('/api/knowledge', requireAdmin, async (req, res, next) => {
       updatedAt: now()
     };
     db.knowledgeSuggestions = db.knowledgeSuggestions.map((item) => ({ ...item, conflicts: [] }));
+    addOperationLog(db, req, 'knowledge.update', {
+      type: 'knowledge',
+      id: 'knowledge',
+      label: db.settings?.siteName || 'Knowledge base',
+      summary: 'Updated official knowledge base'
+    });
     await writeDb(db);
     res.json({ knowledge: db.knowledge });
   } catch (error) {
@@ -1830,6 +1949,12 @@ app.post('/api/knowledge/suggestions/:id/accept', requireAdmin, async (req, res,
     db.knowledge = { ...knowledge, updatedAt: now() };
     suggestion.status = 'accepted';
     suggestion.acceptedAt = now();
+    addOperationLog(db, req, 'suggestion.accept', {
+      type: 'suggestion',
+      id: suggestion.id,
+      label: suggestionTitleForLog(suggestion),
+      summary: 'Accepted AI suggestion into official knowledge base'
+    });
     await writeDb(db);
     res.json({ knowledge: db.knowledge, suggestion });
   } catch (error) {
@@ -1847,6 +1972,12 @@ app.post('/api/knowledge/suggestions/:id/ignore', requireAdmin, async (req, res,
     }
     suggestion.status = 'ignored';
     suggestion.ignoredAt = now();
+    addOperationLog(db, req, 'suggestion.ignore', {
+      type: 'suggestion',
+      id: suggestion.id,
+      label: suggestionTitleForLog(suggestion),
+      summary: 'Ignored AI suggestion'
+    });
     await writeDb(db);
     res.json({ ok: true });
   } catch (error) {
@@ -1854,7 +1985,7 @@ app.post('/api/knowledge/suggestions/:id/ignore', requireAdmin, async (req, res,
   }
 });
 
-app.post('/api/knowledge/generate', requireAdmin, async (_req, res, next) => {
+app.post('/api/knowledge/generate', requireAdmin, async (req, res, next) => {
   try {
     const db = await readDb();
     if (!db.materials.length) {
@@ -1862,6 +1993,12 @@ app.post('/api/knowledge/generate', requireAdmin, async (_req, res, next) => {
       return;
     }
     db.knowledge = await syncKnowledgeFromMaterials(db);
+    addOperationLog(db, req, 'knowledge.generate', {
+      type: 'knowledge',
+      id: 'knowledge',
+      label: db.settings?.siteName || 'Knowledge base',
+      summary: `Regenerated knowledge base from ${db.materials.length} material(s)`
+    });
     await writeDb(db);
     res.json({ knowledge: db.knowledge });
   } catch (error) {

@@ -37,6 +37,7 @@ open-sales-assistant/
 - Admin login and API authentication.
 - Customer list, search, sorting, pagination, and deletion.
 - Customer detail page, chat history, AI profile analysis, and follow-up records.
+- Basic admin operation logs for key write actions.
 - Text, image, and document material upload.
 - AI material analysis and pending suggestions.
 - Knowledge summary, sales playbook, FAQ, and objection handling.
@@ -65,7 +66,7 @@ open-sales-assistant/
 - Add customer owner, follow-up status, and next follow-up time.
 - Add views for due follow-ups, unreplied customers, and high-intent customers.
 - Add customer tags and sales stages.
-- Add operation logs.
+- Improve operation log filters, detail views, and export.
 
 ### P2: Knowledge Quality
 
