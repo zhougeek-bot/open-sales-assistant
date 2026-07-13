@@ -6,6 +6,10 @@ This project follows a lightweight release log while the project is still in ear
 
 ## Unreleased
 
+## v0.1.1 - 2026-07-13
+
+This maintenance release improves bilingual self-hosting, review safety, and regression coverage.
+
 - Added bilingual README entry points for English and Chinese readers.
 - Added English documentation under `docs/en/`.
 - Documented user-managed OpenAI-compatible AI API configuration.

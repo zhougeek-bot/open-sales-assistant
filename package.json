@@ -1,6 +1,6 @@
 {
   "name": "open-sales-assistant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Self-hosted AI sales assistant starter kit for teams and individual sales workflows.",
   "type": "module",
   "scripts": {
