@@ -126,6 +126,7 @@ AI_VISION_MODEL=qwen-vl-plus
 | 开发计划 | [开发计划.md](docs/开发计划.md) | [development-plan.md](docs/en/development-plan.md) |
 | 数据迁移与备份 | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) |
 | 存储策略 | [存储策略.md](docs/存储策略.md) | [storage-strategy.md](docs/en/storage-strategy.md) |
+| Prompt 评测 | [销售回复Prompt评测.md](docs/销售回复Prompt评测.md) | [prompt-evaluation.md](docs/en/prompt-evaluation.md) |
 | Docker 部署 | [Docker部署说明.md](docs/Docker部署说明.md) | [docker-deployment.md](docs/en/docker-deployment.md) |
 | 服务器部署 | [服务器部署说明.md](docs/服务器部署说明.md) | [server-deployment.md](docs/en/server-deployment.md) |
 | 宝塔面板部署 | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) |
@@ -174,6 +175,22 @@ npm run reset-demo:zh
 
 JSON 文件存储会继续作为默认轻量模式保留。后续 PostgreSQL/MySQL 应通过可选 storage adapter 加入，而不是删除当前 JSON 工作流。
 
+## Prompt 评测
+
+运行不需要 API Key 的中英文销售回复基线评测：
+
+```bash
+npm run eval
+```
+
+如需评测 `.env` 中配置的真实 AI 服务商和模型：
+
+```bash
+npm run eval:ai
+```
+
+数据规则、安全检查和贡献方式见[销售回复 Prompt 评测](docs/销售回复Prompt评测.md)。
+
 ## Roadmap
 
 - 改进销售跟进工作台：状态、负责人、下一步动作和提醒。
@@ -183,7 +200,7 @@ JSON 文件存储会继续作为默认轻量模式保留。后续 PostgreSQL/MyS
 - 改进 Docker 部署和生产自部署示例。
 - 增加客户分层和销售漏斗看板。
 - 增加 CRM、表单、聊天工具、表格等连接器示例。
-- 增加测试和 prompt evaluation 用例，方便社区稳定贡献。
+- 扩展 prompt evaluation，增加模型对比和经过审核的评测追踪。
 
 ## Codex for Open Source 目标
 

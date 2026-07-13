@@ -860,10 +860,13 @@ async function syncKnowledgeFromMaterials(db) {
 }
 
 function scoreText(question, text) {
-  const tokens = normalizeText(question)
-    .toLowerCase()
-    .split(/[\s,，。！？、；;:：/\\|]+/)
-    .filter((token) => token.length >= 2);
+  const source = normalizeText(question).toLowerCase();
+  const latinTokens = source.match(/[a-z0-9]+/g) || [];
+  const cjkTokens = (source.match(/[\u3400-\u9fff]+/g) || []).flatMap((chunk) => {
+    if (chunk.length <= 2) return [chunk];
+    return Array.from({ length: chunk.length - 1 }, (_, index) => chunk.slice(index, index + 2));
+  });
+  const tokens = [...new Set([...latinTokens, ...cjkTokens].filter((token) => token.length >= 2))];
   const target = normalizeText(text).toLowerCase();
   return tokens.reduce((score, token) => score + (target.includes(token) ? token.length : 0), 0);
 }
@@ -894,11 +897,21 @@ function pickContext(question, db) {
 function fallbackSalesReply(question, db, context) {
   const settings = db.settings || defaultSettings;
   const knowledge = db.knowledge || buildFallbackKnowledge(db.materials, settings);
-  const faq = (knowledge.faq || []).find((item) => scoreText(question, `${item.question}\n${item.answer}`) > 0);
+  const faq = (knowledge.faq || [])
+    .map((item) => ({ item, score: scoreText(question, `${item.question}\n${item.answer}`) }))
+    .sort((a, b) => b.score - a.score)
+    .find((entry) => entry.score > 0)?.item;
   const points = (knowledge.salesPlaybook || []).map(playbookText).filter(Boolean).slice(0, 3);
+  const isEnglish = settings.demoLanguage === 'en';
+  const fallbackOverview = isEnglish
+    ? 'We will provide clear guidance based on course content, schedule, and certificate information.'
+    : '我们会结合课程内容、学习安排和证书服务，为学员提供清晰的咨询答复。';
+  const highlightsTitle = isEnglish ? 'You may also want to consider:' : '比较建议你重点关注：';
   const answer = [
-    faq?.answer || `这个问题可以这样理解：${knowledge.overview || '我们会结合课程内容、学习安排和证书服务，为学员提供清晰的咨询答复。'}`,
-    points.length ? `\n\n比较建议你重点关注：\n${points.map((point, index) => `${index + 1}. ${point}`).join('\n')}` : '',
+    faq?.answer || (isEnglish
+      ? `Here is a useful overview: ${knowledge.overview || fallbackOverview}`
+      : `这个问题可以这样理解：${knowledge.overview || fallbackOverview}`),
+    points.length ? `\n\n${highlightsTitle}\n${points.map((point, index) => `${index + 1}. ${point}`).join('\n')}` : '',
     `\n\n${settings.contactHint}`
   ].join('');
 

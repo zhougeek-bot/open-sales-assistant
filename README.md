@@ -122,6 +122,7 @@ Start here:
 | Development plan | [development-plan.md](docs/en/development-plan.md) | [开发计划.md](docs/开发计划.md) |
 | Data migration and backup | [data-migration-and-backup.md](docs/en/data-migration-and-backup.md) | [数据迁移与备份说明.md](docs/数据迁移与备份说明.md) |
 | Storage strategy | [storage-strategy.md](docs/en/storage-strategy.md) | [存储策略.md](docs/存储策略.md) |
+| Prompt evaluation | [prompt-evaluation.md](docs/en/prompt-evaluation.md) | [销售回复Prompt评测.md](docs/销售回复Prompt评测.md) |
 | Docker deployment | [docker-deployment.md](docs/en/docker-deployment.md) | [Docker部署说明.md](docs/Docker部署说明.md) |
 | Server deployment | [server-deployment.md](docs/en/server-deployment.md) | [服务器部署说明.md](docs/服务器部署说明.md) |
 | BT Panel deployment | [bt-panel-deployment.md](docs/en/bt-panel-deployment.md) | [宝塔面板部署指南.md](docs/宝塔面板部署指南.md) |
@@ -163,6 +164,22 @@ This repository is not a SaaS platform. The current goal is to provide a clear, 
 
 Future work may add stronger team collaboration, role permissions, database storage, integrations, and evaluation workflows, but the open-source baseline remains focused on helping a team own its sales assistant without depending on a hosted commercial platform.
 
+## Prompt Evaluation
+
+Run the bilingual, no-key sales reply baseline:
+
+```bash
+npm run eval
+```
+
+To evaluate the configured AI provider and model instead:
+
+```bash
+npm run eval:ai
+```
+
+See [Sales Reply Prompt Evaluation](docs/en/prompt-evaluation.md) for dataset rules, safety checks, and contribution guidance.
+
 JSON file storage will remain supported as the default lightweight mode. Future PostgreSQL/MySQL support should be added through optional storage adapters, not by removing the current JSON workflow.
 
 ## Roadmap
@@ -174,7 +191,7 @@ JSON file storage will remain supported as the default lightweight mode. Future 
 - Improve Docker deployment and production self-hosting examples.
 - Add customer segmentation and sales funnel dashboards.
 - Add connector examples for CRM, forms, chat tools, and spreadsheets.
-- Add tests and prompt evaluation cases for stable community contributions.
+- Expand prompt evaluation with model comparisons and reviewed traces.
 
 ## Codex for Open Source Goal
 

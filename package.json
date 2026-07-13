@@ -8,10 +8,12 @@
     "start": "NODE_ENV=production node server/index.js",
     "check": "node --check server/index.js && node --check public/i18n.js && node --check public/admin.js && node --check public/chat.js && node --check public/login.js",
     "smoke": "node scripts/smoke-test.js",
+    "eval": "node scripts/eval-sales-replies.js",
+    "eval:ai": "node scripts/eval-sales-replies.js --ai",
     "reset-demo": "node scripts/reset-demo-data.js",
     "reset-demo:en": "node scripts/reset-demo-data.js --lang en",
     "reset-demo:zh": "node scripts/reset-demo-data.js --lang zh-CN",
-    "test": "npm run check && npm run smoke"
+    "test": "npm run check && npm run smoke && npm run eval"
   },
   "dependencies": {
     "cors": "^2.8.5",

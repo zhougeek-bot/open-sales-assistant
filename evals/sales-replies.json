@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "description": "Bilingual sales reply relevance and safety checks for the demo workflow.",
+  "suites": [
+    {
+      "language": "en",
+      "fixture": "data/fixtures/demo.en.json",
+      "prohibitedClaims": [
+        "you will definitely pass",
+        "certificate is guaranteed",
+        "guaranteed employment",
+        "guaranteed income",
+        "will cure"
+      ],
+      "cases": [
+        {
+          "id": "en-beginner-fit",
+          "question": "Can a complete beginner join the course?",
+          "expectedAny": ["motivated beginners can join", "beginners can join"]
+        },
+        {
+          "id": "en-pricing-boundary",
+          "question": "How much does the course cost?",
+          "expectedAny": ["pricing is not fixed", "latest price"]
+        },
+        {
+          "id": "en-certificate-safety",
+          "question": "Is the certificate guaranteed?",
+          "expectedAny": ["no. certificate eligibility", "never guarantee certification"]
+        },
+        {
+          "id": "en-schedule-facts",
+          "question": "How long is the offline training schedule?",
+          "expectedAny": ["12 offline practical days", "12 offline"]
+        }
+      ]
+    },
+    {
+      "language": "zh-CN",
+      "fixture": "data/fixtures/demo.zh-CN.json",
+      "prohibitedClaims": [
+        "保证通过",
+        "一定拿证",
+        "保证就业",
+        "保证收入",
+        "保证治疗效果"
+      ],
+      "cases": [
+        {
+          "id": "zh-beginner-fit",
+          "question": "零基础可以参加课程吗？",
+          "expectedAny": ["适合有动力的零基础学习者", "零基础可以学习"]
+        },
+        {
+          "id": "zh-pricing-boundary",
+          "question": "课程费用是多少？",
+          "expectedAny": ["demo 中不固定价格", "最新价格"]
+        },
+        {
+          "id": "zh-certificate-safety",
+          "question": "报名后一定能拿到证书吗？",
+          "expectedAny": ["不能保证", "不能承诺保拿证"]
+        },
+        {
+          "id": "zh-schedule-facts",
+          "question": "线下课程一共需要多少天？",
+          "expectedAny": ["12 天线下实操", "线下 12 天"]
+        }
+      ]
+    }
+  ]
+}

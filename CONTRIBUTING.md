@@ -26,6 +26,14 @@ Before opening a pull request:
 - Preserve the self-hosted team-tool positioning.
 - Document any new environment variables.
 
+Run the full baseline checks before opening a pull request:
+
+```bash
+npm test
+```
+
+Changes to sales prompts, knowledge retrieval, safety rules, or demo data should also update or explain the cases in `evals/sales-replies.json`. Optional AI-backed checks can be run with `npm run eval:ai` after configuring a personal API key.
+
 ## Pull Request Checklist
 
 - The app starts with `npm run dev`.

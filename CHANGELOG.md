@@ -17,6 +17,10 @@ This project follows a lightweight release log while the project is still in ear
 - Added admin operation logs for sign-in, data export/backup, customer, material, certificate, settings, and knowledge-base changes.
 - Added editable AI suggestion review fields before acceptance into the official knowledge base.
 - Added server-side suggestion validation, duplicate-processing protection, and isolated integration coverage for the review flow.
+- Added bilingual sales reply evaluation cases with no-key baseline and optional AI-backed modes.
+- Added prompt evaluation documentation and included the baseline suite in `npm test` and CI.
+- Improved bilingual FAQ matching and removed mixed-language text from English fallback replies.
+- Updated GitHub Actions to current Node 24-based action runtimes.
 
 ## v0.1.0 - 2026-06-03
 

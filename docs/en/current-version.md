@@ -94,6 +94,7 @@ Dockerfile and Docker Compose deployment are available for containerized self-ho
 - No customer owner, follow-up reminders, or funnel views.
 - Basic operation logs are available for key admin write actions.
 - AI-generated knowledge suggestions can be reviewed and edited before acceptance.
+- Bilingual sales reply baseline evaluations run without an API key; an optional AI-backed mode is available.
 - No knowledge base version rollback.
 - No AI usage or cost statistics.
 - JSON storage is not suitable for high-concurrency multi-user writes.
@@ -105,7 +106,7 @@ Priority areas:
 1. Team sales workspace.
 2. Stronger operation log filters, detail views, and export.
 3. Knowledge version history and rollback.
-4. Basic tests and prompt evaluation.
+4. Expand prompt evaluation with model comparisons and reviewed traces.
 5. Optional database adapters that preserve JSON mode.
 
 See:
