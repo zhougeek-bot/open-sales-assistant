@@ -19,7 +19,9 @@ const publicDir = path.join(rootDir, 'public');
 const uploadsDir = path.join(rootDir, 'uploads');
 const dataDir = path.join(rootDir, 'data');
 const fixturesDir = path.join(dataDir, 'fixtures');
-const dbPath = path.join(dataDir, 'db.json');
+const dbPath = process.env.DATA_FILE
+  ? path.resolve(process.env.DATA_FILE)
+  : path.join(dataDir, 'db.json');
 const backupDir = process.env.DATA_BACKUP_DIR
   ? path.resolve(process.env.DATA_BACKUP_DIR)
   : path.join(dataDir, 'backups');
@@ -47,6 +49,7 @@ const adminSessionHours = 12;
 
 await fs.mkdir(uploadsDir, { recursive: true });
 await fs.mkdir(dataDir, { recursive: true });
+await fs.mkdir(path.dirname(dbPath), { recursive: true });
 await fs.mkdir(backupDir, { recursive: true });
 
 const upload = multer({
@@ -271,6 +274,54 @@ function suggestionTitleForLog(suggestion = {}) {
   if (suggestion.type === 'faq') return suggestion.question || 'FAQ suggestion';
   if (suggestion.type === 'concern') return suggestion.concern || 'Objection suggestion';
   return suggestion.sourceMaterialTitle || 'AI suggestion';
+}
+
+function suggestionField(body, suggestion, name) {
+  const value = Object.hasOwn(body, name) ? body[name] : suggestion[name];
+  return normalizeText(value || '');
+}
+
+function acceptedKnowledgeItem(suggestion, body, playbookIndex = 0) {
+  if (suggestion.type === 'playbook') {
+    const content = suggestionField(body, suggestion, 'content');
+    if (!content) throw new Error('话术内容不能为空');
+    return normalizePlaybookItem({
+      title: suggestionField(body, suggestion, 'title'),
+      scenario: suggestionField(body, suggestion, 'scenario'),
+      content,
+      sourceMaterialId: suggestion.sourceMaterialId,
+      sourceMaterialTitle: suggestion.sourceMaterialTitle,
+      conflicts: []
+    }, playbookIndex);
+  }
+
+  if (suggestion.type === 'faq') {
+    const question = suggestionField(body, suggestion, 'question');
+    const answer = suggestionField(body, suggestion, 'answer');
+    if (!question || !answer) throw new Error('问题和标准答复不能为空');
+    return {
+      question,
+      answer,
+      sourceMaterialId: suggestion.sourceMaterialId,
+      sourceMaterialTitle: suggestion.sourceMaterialTitle,
+      conflicts: []
+    };
+  }
+
+  if (suggestion.type === 'concern') {
+    const concern = suggestionField(body, suggestion, 'concern');
+    const response = suggestionField(body, suggestion, 'response');
+    if (!concern || !response) throw new Error('顾虑和应对话术不能为空');
+    return {
+      concern,
+      response,
+      sourceMaterialId: suggestion.sourceMaterialId,
+      sourceMaterialTitle: suggestion.sourceMaterialTitle,
+      conflicts: []
+    };
+  }
+
+  throw new Error('不支持的建议类型');
 }
 
 function normalizeText(text = '') {
@@ -1938,38 +1989,25 @@ app.post('/api/knowledge/suggestions/:id/accept', requireAdmin, async (req, res,
       res.status(404).json({ error: '建议词条不存在' });
       return;
     }
+    if (suggestion.status !== 'pending') {
+      res.status(409).json({ error: '该建议已经处理，不能重复采纳' });
+      return;
+    }
     const knowledge = officialKnowledge(db);
-    if (suggestion.type === 'playbook') {
-      knowledge.salesPlaybook.push(normalizePlaybookItem({
-        title: req.body.title || suggestion.title,
-        scenario: req.body.scenario || suggestion.scenario,
-        content: req.body.content || suggestion.content,
-        sourceMaterialId: suggestion.sourceMaterialId,
-        sourceMaterialTitle: suggestion.sourceMaterialTitle,
-        conflicts: []
-      }, knowledge.salesPlaybook.length));
+    let acceptedItem;
+    try {
+      acceptedItem = acceptedKnowledgeItem(suggestion, req.body, knowledge.salesPlaybook.length);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+      return;
     }
-    if (suggestion.type === 'faq') {
-      knowledge.faq.push({
-        question: normalizeText(req.body.question || suggestion.question || ''),
-        answer: normalizeText(req.body.answer || suggestion.answer || ''),
-        sourceMaterialId: suggestion.sourceMaterialId,
-        sourceMaterialTitle: suggestion.sourceMaterialTitle,
-        conflicts: []
-      });
-    }
-    if (suggestion.type === 'concern') {
-      knowledge.concerns.push({
-        concern: normalizeText(req.body.concern || suggestion.concern || ''),
-        response: normalizeText(req.body.response || suggestion.response || ''),
-        sourceMaterialId: suggestion.sourceMaterialId,
-        sourceMaterialTitle: suggestion.sourceMaterialTitle,
-        conflicts: []
-      });
-    }
+    if (suggestion.type === 'playbook') knowledge.salesPlaybook.push(acceptedItem);
+    if (suggestion.type === 'faq') knowledge.faq.push(acceptedItem);
+    if (suggestion.type === 'concern') knowledge.concerns.push(acceptedItem);
     db.knowledge = { ...knowledge, updatedAt: now() };
     suggestion.status = 'accepted';
     suggestion.acceptedAt = now();
+    suggestion.acceptedContent = acceptedItem;
     addOperationLog(db, req, 'suggestion.accept', {
       type: 'suggestion',
       id: suggestion.id,
@@ -1989,6 +2027,10 @@ app.post('/api/knowledge/suggestions/:id/ignore', requireAdmin, async (req, res,
     const suggestion = db.knowledgeSuggestions.find((item) => item.id === req.params.id);
     if (!suggestion) {
       res.status(404).json({ error: '建议词条不存在' });
+      return;
+    }
+    if (suggestion.status !== 'pending') {
+      res.status(409).json({ error: '该建议已经处理，不能重复忽略' });
       return;
     }
     suggestion.status = 'ignored';

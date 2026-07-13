@@ -440,11 +440,30 @@ function suggestionTitle(suggestion) {
   return '建议词条';
 }
 
-function suggestionBody(suggestion) {
-  if (suggestion.type === 'playbook') return [suggestion.scenario, suggestion.content].filter(Boolean).join('\n');
-  if (suggestion.type === 'faq') return suggestion.answer || '';
-  if (suggestion.type === 'concern') return suggestion.response || '';
-  return '';
+function suggestionFields(suggestion) {
+  if (suggestion.type === 'playbook') return [
+    ['title', '话术标题', suggestion.title, '例如：价格咨询跟进'],
+    ['scenario', '使用场景', suggestion.scenario, '例如：客户询问价格后'],
+    ['content', '话术内容', suggestion.content, '审核并修改可直接使用的话术', true]
+  ];
+  if (suggestion.type === 'faq') return [
+    ['question', '问题', suggestion.question, '客户常问的问题'],
+    ['answer', '标准答复', suggestion.answer, '审核并修改标准答复', true]
+  ];
+  if (suggestion.type === 'concern') return [
+    ['concern', '顾虑', suggestion.concern, '客户可能提出的顾虑'],
+    ['response', '应对话术', suggestion.response, '审核并修改应对话术', true]
+  ];
+  return [];
+}
+
+function renderSuggestionFields(suggestion) {
+  return suggestionFields(suggestion).map(([name, label, value, placeholder, multiline]) => `
+    <label>${label}${multiline
+      ? `<textarea name="${name}" rows="4" placeholder="${placeholder}">${escapeHtml(value || '')}</textarea>`
+      : `<input name="${name}" value="${escapeHtml(value || '')}" placeholder="${placeholder}">`}
+    </label>
+  `).join('');
 }
 
 function renderSuggestions() {
@@ -467,7 +486,9 @@ function renderSuggestions() {
         </div>
       </div>
       ${renderConflictText(suggestion.conflicts)}
-      <p>${escapeHtml(suggestionBody(suggestion))}</p>
+      <div class="suggestion-edit-fields">
+        ${renderSuggestionFields(suggestion)}
+      </div>
     </article>
   `).join('');
   box.querySelectorAll('.accept-suggestion').forEach((button) => {
@@ -531,12 +552,27 @@ function collectStructuredItems(id, firstName, secondName) {
 }
 
 async function acceptSuggestion(id) {
+  const item = $(`.suggestion-item [data-id="${id}"]`)?.closest('.suggestion-item');
+  const suggestion = state.suggestions.find((entry) => entry.id === id);
+  if (!item || !suggestion) return;
+  const payload = Object.fromEntries(suggestionFields(suggestion).map(([name]) => [
+    name,
+    item.querySelector(`[name="${name}"]`)?.value.trim() || ''
+  ]));
+  const button = item.querySelector('.accept-suggestion');
+  const restore = setLoading(button, '采纳中...');
   try {
-    await api(`/api/knowledge/suggestions/${id}/accept`, { method: 'POST' });
+    await api(`/api/knowledge/suggestions/${id}/accept`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
     await loadAll();
     toast('建议已采纳到正式知识库');
   } catch (error) {
     toast(error.message);
+  } finally {
+    restore();
   }
 }
 

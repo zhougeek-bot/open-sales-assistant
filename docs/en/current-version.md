@@ -1,6 +1,6 @@
 # Current Version
 
-Updated: 2026-06-03
+Updated: 2026-07-13
 
 ## 1. Positioning
 
@@ -93,6 +93,7 @@ Dockerfile and Docker Compose deployment are available for containerized self-ho
 - No sales member roles or permissions.
 - No customer owner, follow-up reminders, or funnel views.
 - Basic operation logs are available for key admin write actions.
+- AI-generated knowledge suggestions can be reviewed and edited before acceptance.
 - No knowledge base version rollback.
 - No AI usage or cost statistics.
 - JSON storage is not suitable for high-concurrency multi-user writes.
@@ -103,7 +104,7 @@ Priority areas:
 
 1. Team sales workspace.
 2. Stronger operation log filters, detail views, and export.
-3. Knowledge versioning and editable AI suggestions.
+3. Knowledge version history and rollback.
 4. Basic tests and prompt evaluation.
 5. Optional database adapters that preserve JSON mode.
 

@@ -1,5 +1,8 @@
 import { spawn } from 'node:child_process';
+import fs from 'node:fs/promises';
 import net from 'node:net';
+import os from 'node:os';
+import path from 'node:path';
 
 const requiredPages = [
   ['/', '咨询助手'],
@@ -44,15 +47,29 @@ async function fetchText(url) {
   return response.text();
 }
 
+async function fetchJson(url, options = {}) {
+  const response = await fetch(url, options);
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(`${url} returned HTTP ${response.status}: ${data.error || 'Unknown error'}`);
+  return data;
+}
+
 async function main() {
   const port = await getFreePort();
   const baseUrl = `http://127.0.0.1:${port}`;
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'open-sales-assistant-'));
+  const adminUsername = 'smoke-admin';
+  const adminPassword = 'SmokeTest@123456';
   const child = spawn(process.execPath, ['server/index.js'], {
     env: {
       ...process.env,
       PORT: String(port),
       PUBLIC_BASE_URL: baseUrl,
-      AI_API_KEY: ''
+      AI_API_KEY: '',
+      DATA_FILE: path.join(tempDir, 'db.json'),
+      DATA_BACKUP_DIR: path.join(tempDir, 'backups'),
+      ADMIN_USERNAME: adminUsername,
+      ADMIN_PASSWORD: adminPassword
     },
     stdio: ['ignore', 'pipe', 'pipe']
   });
@@ -95,12 +112,64 @@ async function main() {
       }
     }
 
+    const login = await fetchJson(`${baseUrl}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: adminUsername, password: adminPassword })
+    });
+    const authHeaders = {
+      Authorization: `Bearer ${login.token}`,
+      'Content-Type': 'application/json'
+    };
+    const material = await fetchJson(`${baseUrl}/api/materials/text`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify({
+        title: 'Smoke test product',
+        category: 'Demo',
+        content: 'A practical sales assistant for small teams.'
+      })
+    });
+    const suggestion = material.suggestions[0];
+    if (!suggestion) throw new Error('Material analysis did not create a review suggestion.');
+    const emptyAcceptance = await fetch(`${baseUrl}/api/knowledge/suggestions/${suggestion.id}/accept`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify({ content: '' })
+    });
+    if (emptyAcceptance.status !== 400) {
+      throw new Error(`Empty suggestion acceptance returned HTTP ${emptyAcceptance.status}, expected 400.`);
+    }
+    const editedContent = 'Edited and approved sales guidance.';
+    const accepted = await fetchJson(`${baseUrl}/api/knowledge/suggestions/${suggestion.id}/accept`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify({
+        title: 'Reviewed guidance',
+        scenario: 'Smoke test',
+        content: editedContent
+      })
+    });
+    if (!accepted.knowledge.salesPlaybook.some((item) => item.content === editedContent)) {
+      throw new Error('Edited suggestion content was not accepted into the knowledge base.');
+    }
+
+    const duplicateResponse = await fetch(`${baseUrl}/api/knowledge/suggestions/${suggestion.id}/accept`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify({ content: editedContent })
+    });
+    if (duplicateResponse.status !== 409) {
+      throw new Error(`Duplicate suggestion acceptance returned HTTP ${duplicateResponse.status}, expected 409.`);
+    }
+
     console.log('Smoke test passed.');
   } finally {
     child.kill('SIGTERM');
     setTimeout(() => {
       if (child.exitCode === null) child.kill('SIGKILL');
     }, 1000).unref();
+    await fs.rm(tempDir, { recursive: true, force: true });
   }
 
   if (child.exitCode && child.exitCode !== 0) {

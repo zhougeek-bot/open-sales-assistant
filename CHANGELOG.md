@@ -15,6 +15,8 @@ This project follows a lightweight release log while the project is still in ear
 - Replaced the default demo dataset with a cleaner English training-course sales scenario.
 - Made English the default UI language and added English/Chinese demo fixtures with language-specific reset commands.
 - Added admin operation logs for sign-in, data export/backup, customer, material, certificate, settings, and knowledge-base changes.
+- Added editable AI suggestion review fields before acceptance into the official knowledge base.
+- Added server-side suggestion validation, duplicate-processing protection, and isolated integration coverage for the review flow.
 
 ## v0.1.0 - 2026-06-03
 
